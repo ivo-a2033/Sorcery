@@ -1,0 +1,72 @@
+[gd_scene load_steps=10 format=3 uid="uid://cagpge57ghy61"]
+
+[ext_resource type="Script" path="res://Player.gd" id="1_16lhq"]
+[ext_resource type="Texture2D" uid="uid://bvvptm44vajtn" path="res://guy.png" id="1_gkg26"]
+[ext_resource type="Texture2D" uid="uid://bkmt0ry5fihm4" path="res://dirt.png" id="2_hnyhf"]
+[ext_resource type="Script" path="res://Camera2D.gd" id="4_ljgna"]
+[ext_resource type="Texture2D" uid="uid://0kr43xq7ms3e" path="res://sky.png" id="5_rrgyw"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_8j0bx"]
+friction = 0.2
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_twwtv"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hanuc"]
+friction = 0.2
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7l0gy"]
+size = Vector2(1600, 20)
+
+[node name="World" type="Node2D"]
+
+[node name="Player" type="RigidBody2D" parent="."]
+position = Vector2(695, 496)
+physics_material_override = SubResource("PhysicsMaterial_8j0bx")
+lock_rotation = true
+linear_damp = 3.0
+script = ExtResource("1_16lhq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+shape = SubResource("RectangleShape2D_twwtv")
+
+[node name="Sprite2D" type="Sprite2D" parent="Player"]
+texture = ExtResource("1_gkg26")
+
+[node name="Player2" type="RigidBody2D" parent="."]
+position = Vector2(944, 496)
+physics_material_override = SubResource("PhysicsMaterial_hanuc")
+lock_rotation = true
+linear_damp = 3.0
+script = ExtResource("1_16lhq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player2"]
+shape = SubResource("RectangleShape2D_twwtv")
+
+[node name="Sprite2D" type="Sprite2D" parent="Player2"]
+texture = ExtResource("1_gkg26")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(0, -10)
+
+[node name="Dirt" type="TextureRect" parent="StaticBody2D"]
+offset_top = 892.0
+offset_right = 1600.0
+offset_bottom = 2052.0
+texture = ExtResource("2_hnyhf")
+stretch_mode = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(800, 900)
+shape = SubResource("RectangleShape2D_7l0gy")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+script = ExtResource("4_ljgna")
+
+[node name="Sky" type="TextureRect" parent="."]
+z_index = -10
+offset_left = -1504.0
+offset_top = -672.0
+offset_right = 4079.0
+offset_bottom = 2963.0
+texture = ExtResource("5_rrgyw")
+stretch_mode = 1
