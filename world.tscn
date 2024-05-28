@@ -32,6 +32,12 @@ shape = SubResource("RectangleShape2D_twwtv")
 [node name="Sprite2D" type="Sprite2D" parent="Player"]
 texture = ExtResource("1_gkg26")
 
+[node name="ProgressBar" type="ProgressBar" parent="Player"]
+offset_left = -51.0
+offset_top = -46.0
+offset_right = 51.0
+offset_bottom = -19.0
+
 [node name="Player2" type="RigidBody2D" parent="."]
 position = Vector2(944, 496)
 physics_material_override = SubResource("PhysicsMaterial_hanuc")
@@ -44,6 +50,12 @@ shape = SubResource("RectangleShape2D_twwtv")
 
 [node name="Sprite2D" type="Sprite2D" parent="Player2"]
 texture = ExtResource("1_gkg26")
+
+[node name="ProgressBar" type="ProgressBar" parent="Player2"]
+offset_left = -51.0
+offset_top = -46.0
+offset_right = 51.0
+offset_bottom = -19.0
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 position = Vector2(0, -10)
