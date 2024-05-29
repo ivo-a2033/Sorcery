@@ -32,11 +32,30 @@ shape = SubResource("RectangleShape2D_twwtv")
 [node name="Sprite2D" type="Sprite2D" parent="Player"]
 texture = ExtResource("1_gkg26")
 
-[node name="ProgressBar" type="ProgressBar" parent="Player"]
-offset_left = -51.0
-offset_top = -46.0
-offset_right = 51.0
-offset_bottom = -19.0
+[node name="UI" type="Control" parent="Player"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -695.0
+offset_top = -496.0
+offset_right = -655.0
+offset_bottom = -456.0
+
+[node name="HP" type="ProgressBar" parent="Player/UI"]
+layout_mode = 0
+offset_left = 644.0
+offset_top = 450.0
+offset_right = 744.0
+offset_bottom = 466.0
+theme_override_font_sizes/font_size = 8
+
+[node name="Ammo" type="ProgressBar" parent="Player/UI"]
+layout_mode = 0
+offset_left = 659.0
+offset_top = 466.0
+offset_right = 713.0
+offset_bottom = 482.0
+theme_override_font_sizes/font_size = 8
+show_percentage = false
 
 [node name="Player2" type="RigidBody2D" parent="."]
 position = Vector2(944, 496)
@@ -51,11 +70,30 @@ shape = SubResource("RectangleShape2D_twwtv")
 [node name="Sprite2D" type="Sprite2D" parent="Player2"]
 texture = ExtResource("1_gkg26")
 
-[node name="ProgressBar" type="ProgressBar" parent="Player2"]
-offset_left = -51.0
-offset_top = -46.0
-offset_right = 51.0
-offset_bottom = -19.0
+[node name="UI" type="Control" parent="Player2"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -695.0
+offset_top = -496.0
+offset_right = -655.0
+offset_bottom = -456.0
+
+[node name="HP" type="ProgressBar" parent="Player2/UI"]
+layout_mode = 0
+offset_left = 644.0
+offset_top = 450.0
+offset_right = 744.0
+offset_bottom = 466.0
+theme_override_font_sizes/font_size = 8
+
+[node name="Ammo" type="ProgressBar" parent="Player2/UI"]
+layout_mode = 0
+offset_left = 659.0
+offset_top = 466.0
+offset_right = 713.0
+offset_bottom = 482.0
+theme_override_font_sizes/font_size = 8
+show_percentage = false
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 position = Vector2(0, -10)
