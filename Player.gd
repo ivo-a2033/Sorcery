@@ -9,7 +9,6 @@ var flip_x = 1
 var ammo = 3
 
 var technique = null
-var image
 
 var mov_dict = {
 	"up": "w",
@@ -22,13 +21,9 @@ func _ready():
 	if Globals.p1 == null:
 		Globals.p1 = self
 		technique = Globals.technique1
-		get_parent().get_node("P1Sprite").boss = self
-		image = get_parent().get_node("P1Sprite")
 	else:
 		Globals.p2 = self
 		technique = Globals.technique2
-		get_parent().get_node("P2Sprite").boss = self		
-		image = get_parent().get_node("P1Sprite")
 		mov_dict = {
 			"up": "up",
 			"left": "left",
@@ -38,9 +33,9 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _physics_process(delta):
-	image.get_node("UI/HP").value = hp
-	image.get_node("UI/Ammo").value = ammo/3.0*100
+func _process(delta):
+	$UI/HP.value = hp
+	$UI/Ammo.value = ammo/3*100
 	
 	if Input.is_action_just_pressed(mov_dict["up"]):
 		apply_central_force(Vector2(0,-1) * jump_force)
