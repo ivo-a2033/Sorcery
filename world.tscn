@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://cagpge57ghy61"]
+[gd_scene load_steps=11 format=3 uid="uid://cagpge57ghy61"]
 
 [ext_resource type="Script" path="res://Player.gd" id="1_16lhq"]
 [ext_resource type="Texture2D" uid="uid://bvvptm44vajtn" path="res://guy.png" id="1_gkg26"]
+[ext_resource type="Script" path="res://P1Sprite.gd" id="2_2plb2"]
 [ext_resource type="Texture2D" uid="uid://bkmt0ry5fihm4" path="res://dirt.png" id="2_hnyhf"]
 [ext_resource type="Script" path="res://Camera2D.gd" id="4_ljgna"]
 [ext_resource type="Texture2D" uid="uid://0kr43xq7ms3e" path="res://sky.png" id="5_rrgyw"]
@@ -19,6 +20,66 @@ size = Vector2(1600, 20)
 
 [node name="World" type="Node2D"]
 
+[node name="P1Sprite" type="Sprite2D" parent="."]
+position = Vector2(695, 496)
+texture = ExtResource("1_gkg26")
+script = ExtResource("2_2plb2")
+
+[node name="UI" type="Control" parent="P1Sprite"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -695.0
+offset_top = -496.0
+offset_right = -655.0
+offset_bottom = -456.0
+
+[node name="HP" type="ProgressBar" parent="P1Sprite/UI"]
+layout_mode = 0
+offset_left = 644.0
+offset_top = 450.0
+offset_right = 744.0
+offset_bottom = 466.0
+theme_override_font_sizes/font_size = 8
+
+[node name="Ammo" type="ProgressBar" parent="P1Sprite/UI"]
+layout_mode = 0
+offset_left = 659.0
+offset_top = 466.0
+offset_right = 713.0
+offset_bottom = 482.0
+theme_override_font_sizes/font_size = 8
+show_percentage = false
+
+[node name="P2Sprite" type="Sprite2D" parent="."]
+position = Vector2(695, 496)
+texture = ExtResource("1_gkg26")
+script = ExtResource("2_2plb2")
+
+[node name="UI" type="Control" parent="P2Sprite"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -446.0
+offset_top = -496.0
+offset_right = -406.0
+offset_bottom = -456.0
+
+[node name="HP" type="ProgressBar" parent="P2Sprite/UI"]
+layout_mode = 0
+offset_left = 644.0
+offset_top = 450.0
+offset_right = 744.0
+offset_bottom = 466.0
+theme_override_font_sizes/font_size = 8
+
+[node name="Ammo" type="ProgressBar" parent="P2Sprite/UI"]
+layout_mode = 0
+offset_left = 659.0
+offset_top = 466.0
+offset_right = 713.0
+offset_bottom = 482.0
+theme_override_font_sizes/font_size = 8
+show_percentage = false
+
 [node name="Player" type="RigidBody2D" parent="."]
 position = Vector2(695, 496)
 physics_material_override = SubResource("PhysicsMaterial_8j0bx")
@@ -30,32 +91,8 @@ script = ExtResource("1_16lhq")
 shape = SubResource("RectangleShape2D_twwtv")
 
 [node name="Sprite2D" type="Sprite2D" parent="Player"]
+visible = false
 texture = ExtResource("1_gkg26")
-
-[node name="UI" type="Control" parent="Player"]
-layout_mode = 3
-anchors_preset = 0
-offset_left = -695.0
-offset_top = -496.0
-offset_right = -655.0
-offset_bottom = -456.0
-
-[node name="HP" type="ProgressBar" parent="Player/UI"]
-layout_mode = 0
-offset_left = 644.0
-offset_top = 450.0
-offset_right = 744.0
-offset_bottom = 466.0
-theme_override_font_sizes/font_size = 8
-
-[node name="Ammo" type="ProgressBar" parent="Player/UI"]
-layout_mode = 0
-offset_left = 659.0
-offset_top = 466.0
-offset_right = 713.0
-offset_bottom = 482.0
-theme_override_font_sizes/font_size = 8
-show_percentage = false
 
 [node name="Player2" type="RigidBody2D" parent="."]
 position = Vector2(944, 496)
@@ -68,32 +105,8 @@ script = ExtResource("1_16lhq")
 shape = SubResource("RectangleShape2D_twwtv")
 
 [node name="Sprite2D" type="Sprite2D" parent="Player2"]
+visible = false
 texture = ExtResource("1_gkg26")
-
-[node name="UI" type="Control" parent="Player2"]
-layout_mode = 3
-anchors_preset = 0
-offset_left = -695.0
-offset_top = -496.0
-offset_right = -655.0
-offset_bottom = -456.0
-
-[node name="HP" type="ProgressBar" parent="Player2/UI"]
-layout_mode = 0
-offset_left = 644.0
-offset_top = 450.0
-offset_right = 744.0
-offset_bottom = 466.0
-theme_override_font_sizes/font_size = 8
-
-[node name="Ammo" type="ProgressBar" parent="Player2/UI"]
-layout_mode = 0
-offset_left = 659.0
-offset_top = 466.0
-offset_right = 713.0
-offset_bottom = 482.0
-theme_override_font_sizes/font_size = 8
-show_percentage = false
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 position = Vector2(0, -10)
@@ -110,6 +123,7 @@ position = Vector2(800, 900)
 shape = SubResource("RectangleShape2D_7l0gy")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(786, 458)
 script = ExtResource("4_ljgna")
 
 [node name="Sky" type="TextureRect" parent="."]
