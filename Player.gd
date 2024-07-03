@@ -14,8 +14,11 @@ var mov_dict = {
 	"up": "w",
 	"left": "a",
 	"down": "s",
-	"right": "d"
+	"right": "d",
+	"technique": "e"
 }
+
+var blackhole = load("res://blackhole.tscn")
 
 func _ready():
 	if Globals.p1 == null:
@@ -28,7 +31,8 @@ func _ready():
 			"up": "up",
 			"left": "left",
 			"down": "down",
-			"right": "right"
+			"right": "right",
+			"technique": "l"
 		}
 
 
@@ -37,6 +41,14 @@ func _process(delta):
 	$UI/HP.value = hp
 	$UI/Ammo.value = ammo/3*100
 	
+	
+	if Input.is_action_just_pressed(mov_dict["technique"]):
+		if technique == "Black Hole":
+			var hole = blackhole.instantiate()
+			hole.position = position
+			hole.caster = self
+			get_parent().add_child(hole)
+			
 	if Input.is_action_just_pressed(mov_dict["up"]):
 		apply_central_force(Vector2(0,-1) * jump_force)
 	if Input.is_action_pressed(mov_dict["left"]):
@@ -56,3 +68,12 @@ func _process(delta):
 		slash.set_velocity()
 		slash.exceptions.append(self)
 		get_parent().add_child(slash)
+		
+	
+func take_dmg(dmg):
+	hp -= dmg
+	var label = Label.new()
+	label.text = "-" + str(dmg)
+	label.position = position + Vector2(Globals.rng.randf_range(0,64), 0).rotated(Globals.rng.randf_range(0, PI * 2))
+	get_parent().add_child(label)
+	Globals.labels.append(label)

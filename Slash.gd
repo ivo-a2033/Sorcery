@@ -23,5 +23,5 @@ func _process(delta):
 
 func hit_hp(body):
 	if body.get("hp") != null and not(body in exceptions):
-		body.hp -= damage
+		body.take_dmg(damage)
 		queue_free()
