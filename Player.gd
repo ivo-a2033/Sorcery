@@ -9,6 +9,7 @@ var flip_x = 1
 var ammo = 3
 
 var technique = null
+var cursed_energy = 0
 
 var mov_dict = {
 	"up": "w",
@@ -19,6 +20,10 @@ var mov_dict = {
 }
 
 var blackhole = load("res://blackhole.tscn")
+var ghostdogsscene = load("res://wolf.tscn")
+
+var enemy 
+signal give_energy
 
 func _ready():
 	if Globals.p1 == null:
@@ -26,6 +31,13 @@ func _ready():
 		technique = Globals.technique1
 	else:
 		Globals.p2 = self
+		enemy = Globals.p1
+		
+		enemy.connect("give_energy", get_energy)
+		connect("give_energy", enemy.get_energy)
+		
+		Globals.p1.enemy = self
+		
 		technique = Globals.technique2
 		mov_dict = {
 			"up": "up",
@@ -39,15 +51,25 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	$UI/HP.value = hp
-	$UI/Ammo.value = ammo/3*100
-	
-	
+	$UI/Ammo.value = ammo/3.0*100
+	$UI/Energy.value = cursed_energy	
+
+	cursed_energy += delta * 3
+		
 	if Input.is_action_just_pressed(mov_dict["technique"]):
-		if technique == "Black Hole":
+		if technique == "Black Hole" and cursed_energy >= 95:
+			cursed_energy -= 95
 			var hole = blackhole.instantiate()
 			hole.position = position
 			hole.caster = self
 			get_parent().add_child(hole)
+			
+		if technique == "Ghost Dogs" and cursed_energy >= 60:
+			cursed_energy -= 60
+			var dog = ghostdogsscene.instantiate()
+			dog.position = position
+			dog.target = enemy
+			get_parent().add_child(dog)
 			
 	if Input.is_action_just_pressed(mov_dict["up"]):
 		apply_central_force(Vector2(0,-1) * jump_force)
@@ -68,7 +90,11 @@ func _process(delta):
 		slash.set_velocity()
 		slash.exceptions.append(self)
 		get_parent().add_child(slash)
-		
+
+
+func get_energy(num):
+	cursed_energy += num
+	
 	
 func take_dmg(dmg):
 	hp -= dmg
@@ -77,3 +103,6 @@ func take_dmg(dmg):
 	label.position = position + Vector2(Globals.rng.randf_range(0,64), 0).rotated(Globals.rng.randf_range(0, PI * 2))
 	get_parent().add_child(label)
 	Globals.labels.append(label)
+	emit_signal("give_energy", dmg)
+	
+	

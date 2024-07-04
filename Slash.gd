@@ -6,6 +6,8 @@ var velocity = Vector2(0,0)
 var speed = 350
 var exceptions = []
 
+signal give_energy
+
 func _ready():
 	$AnimationPlayer.play("slash")
 	connect("body_entered", hit_hp)
@@ -24,4 +26,5 @@ func _process(delta):
 func hit_hp(body):
 	if body.get("hp") != null and not(body in exceptions):
 		body.take_dmg(damage)
+		emit_signal("give_energy", damage)
 		queue_free()
