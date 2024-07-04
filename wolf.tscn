@@ -1,7 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://dpnxkr4grbta2"]
+[gd_scene load_steps=6 format=3 uid="uid://dpnxkr4grbta2"]
 
 [ext_resource type="Texture2D" uid="uid://4rnw7xdovffd" path="res://wolf_face.png" id="1_bcvgg"]
 [ext_resource type="Script" path="res://wolf.gd" id="1_ntcd0"]
+[ext_resource type="Material" uid="uid://c7b7rs6mb52cl" path="res://spell_cast_wolf.tres" id="3_wq6g8"]
+[ext_resource type="Texture2D" uid="uid://bpbe8407leicg" path="res://magic particle.png" id="4_udrm4"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dwwls"]
 radius = 30.4138
@@ -16,3 +18,8 @@ texture = ExtResource("1_bcvgg")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_dwwls")
+
+[node name="SpellCast" type="GPUParticles2D" parent="."]
+amount = 800
+process_material = ExtResource("3_wq6g8")
+texture = ExtResource("4_udrm4")

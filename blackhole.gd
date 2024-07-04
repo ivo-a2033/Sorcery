@@ -21,6 +21,9 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+
+	Globals.envoirment_brightness = 0
+	
 	$PointLight2D.visible = not (casting_time > 0)
 	if casting_time > 0:
 		casting_time -= delta

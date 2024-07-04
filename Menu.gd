@@ -2,11 +2,12 @@ extends Control
 
 
 var technique1 = "Black Hole"
-var technique2 = "Black Hole"
+var technique2 = "Energy Shot"
 
 var all_techniques = {
 	0: "Black Hole",
 	1: "Ghost Dogs",
+	2: "Energy Shot",
 }
 
 func _ready():

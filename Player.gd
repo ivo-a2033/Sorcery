@@ -9,7 +9,7 @@ var flip_x = 1
 var ammo = 3
 
 var technique = null
-var cursed_energy = 0
+var cursed_energy = 100
 
 var mov_dict = {
 	"up": "w",
@@ -21,6 +21,8 @@ var mov_dict = {
 
 var blackhole = load("res://blackhole.tscn")
 var ghostdogsscene = load("res://wolf.tscn")
+var ghostdogsscenespawner = load("res://spell_cast_wolf.tscn")
+var shotscene = load("res://energy_shot.tscn")
 
 var enemy 
 signal give_energy
@@ -66,10 +68,19 @@ func _process(delta):
 			
 		if technique == "Ghost Dogs" and cursed_energy >= 60:
 			cursed_energy -= 60
-			var dog = ghostdogsscene.instantiate()
+			var dog = ghostdogsscenespawner.instantiate()
 			dog.position = position
-			dog.target = enemy
 			get_parent().add_child(dog)
+			dog.connect("spawn_dog", spawn_dog)
+			
+		if technique == "Energy Shot" and cursed_energy >= 45:
+			cursed_energy -= 45			
+			var shot = shotscene.instantiate()
+			shot.position = position
+			shot.flip_x = flip_x
+			shot.set_velocity()
+			shot.exceptions.append(self)
+			get_parent().add_child(shot)
 			
 	if Input.is_action_just_pressed(mov_dict["up"]):
 		apply_central_force(Vector2(0,-1) * jump_force)
@@ -95,6 +106,12 @@ func _process(delta):
 func get_energy(num):
 	cursed_energy += num
 	
+func spawn_dog(pos):
+	var dog = ghostdogsscene.instantiate()
+	dog.position = pos
+	dog.target = enemy
+	get_parent().add_child(dog)
+	
 	
 func take_dmg(dmg):
 	hp -= dmg
@@ -104,5 +121,10 @@ func take_dmg(dmg):
 	get_parent().add_child(label)
 	Globals.labels.append(label)
 	emit_signal("give_energy", dmg)
+
+func recoil(pos):
+	var vec = (position - pos)
+	apply_central_force(vec.normalized() * 100000)
+	
 	
 	

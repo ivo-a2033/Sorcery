@@ -1,0 +1,27 @@
+[gd_scene load_steps=7 format=3 uid="uid://desje1wlomvmk"]
+
+[ext_resource type="Script" path="res://energy_shot.gd" id="1_1inag"]
+[ext_resource type="PackedScene" uid="uid://l07chflahdhp" path="res://spell_cast.tscn" id="2_wd1jk"]
+[ext_resource type="Texture2D" uid="uid://bldoelhrpx231" path="res://muzzle_05.png" id="3_m2qo1"]
+[ext_resource type="Texture2D" uid="uid://d1p6cve1b1i7f" path="res://energy_shot.png" id="4_uboxa"]
+[ext_resource type="Texture2D" uid="uid://nenuc6surjfg" path="res://flare_01.png" id="5_8i07l"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_uqh3s"]
+
+[node name="EnergyShot" type="Area2D"]
+script = ExtResource("1_1inag")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_uqh3s")
+
+[node name="SpellCast" parent="." instance=ExtResource("2_wd1jk")]
+position = Vector2(0, -19)
+amount = 200
+texture = ExtResource("3_m2qo1")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("4_uboxa")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+texture = ExtResource("5_8i07l")
+texture_scale = 2.0

@@ -8,12 +8,21 @@ var technique2
 
 var labels = []
 
+var envoirment_brightness = 1
+var world_canvas
+var cam
+
 func _ready():
 	pass # Replace with function body.
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	
+	if world_canvas != null:
+		var v = int(envoirment_brightness * 255)
+		var t = 200 + int(55 * envoirment_brightness)
+		world_canvas.color = Color8(v,v,v,t)
 	
 	
 	var remove = []
@@ -26,3 +35,4 @@ func _process(delta):
 	for label in remove:
 		labels.remove_at(labels.find(label))
 		label.queue_free()
+	envoirment_brightness = 1

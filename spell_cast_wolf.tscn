@@ -1,0 +1,11 @@
+[gd_scene load_steps=4 format=3 uid="uid://cjq3l8tbgr715"]
+
+[ext_resource type="Material" uid="uid://c7b7rs6mb52cl" path="res://spell_cast_wolf.tres" id="1_4lgtq"]
+[ext_resource type="Texture2D" uid="uid://bpbe8407leicg" path="res://magic particle.png" id="2_1grn7"]
+[ext_resource type="Script" path="res://spell_cast_wolf.gd" id="3_m4fk4"]
+
+[node name="SpellCast" type="GPUParticles2D"]
+amount = 800
+process_material = ExtResource("1_4lgtq")
+texture = ExtResource("2_1grn7")
+script = ExtResource("3_m4fk4")

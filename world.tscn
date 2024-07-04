@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://cagpge57ghy61"]
+[gd_scene load_steps=11 format=3 uid="uid://cagpge57ghy61"]
 
 [ext_resource type="Script" path="res://Player.gd" id="1_16lhq"]
 [ext_resource type="Texture2D" uid="uid://bvvptm44vajtn" path="res://guy.png" id="1_gkg26"]
 [ext_resource type="Texture2D" uid="uid://bkmt0ry5fihm4" path="res://dirt.png" id="2_hnyhf"]
 [ext_resource type="Script" path="res://Camera2D.gd" id="4_ljgna"]
 [ext_resource type="Texture2D" uid="uid://0kr43xq7ms3e" path="res://sky.png" id="5_rrgyw"]
+[ext_resource type="Script" path="res://CanvasModulate.gd" id="6_rn706"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_8j0bx"]
 friction = 0.2
@@ -58,6 +59,7 @@ theme_override_font_sizes/font_size = 8
 show_percentage = false
 
 [node name="Energy" type="ProgressBar" parent="Player/UI"]
+layout_mode = 0
 offset_left = 659.0
 offset_top = 476.0
 offset_right = 713.0
@@ -104,6 +106,7 @@ theme_override_font_sizes/font_size = 8
 show_percentage = false
 
 [node name="Energy" type="ProgressBar" parent="Player2/UI"]
+layout_mode = 0
 offset_left = 659.0
 offset_top = 476.0
 offset_right = 713.0
@@ -136,3 +139,7 @@ offset_right = 4079.0
 offset_bottom = 2963.0
 texture = ExtResource("5_rrgyw")
 stretch_mode = 1
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0, 0, 0, 0.780392)
+script = ExtResource("6_rn706")
