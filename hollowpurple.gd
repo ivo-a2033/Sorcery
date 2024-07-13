@@ -1,10 +1,10 @@
 extends Node2D
 
 
-var time = 8
+var time = 12
 var hitlist = []
 var caster 
-var casting_time = 2
+var casting_time = 1
 var cast_effect = load("res://spell_cast.tscn")
 var myeffect 
 
@@ -32,10 +32,10 @@ func _process(delta):
 			myeffect.queue_free()
 			
 		time -= delta
-		$PointLight2D.texture_scale += (100 - $PointLight2D.texture_scale) * delta / 5
-		$Area2D/CollisionShape2D.shape.radius += (500 - $Area2D/CollisionShape2D.shape.radius) * delta / 5
-		$PointLight2D.rotate(delta * .15 * time/8)
-		$PointLight2D.color = Color.from_hsv((time/8), 1, .7)
+		$PointLight2D.texture_scale += (100 - $PointLight2D.texture_scale) * delta / 1
+		$Area2D/CollisionShape2D.shape.radius += (500 - $Area2D/CollisionShape2D.shape.radius) * delta / 1
+		$PointLight2D.rotate(delta * .15 * time/12)
+		$PointLight2D.color = Color.from_hsv(.9 - time/120, 1, .7)
 		
 		for body in hitlist:
 			body.take_dmg(1)

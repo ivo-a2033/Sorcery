@@ -1,9 +1,9 @@
 [gd_scene load_steps=3 format=3 uid="uid://l07chflahdhp"]
 
 [ext_resource type="Texture2D" uid="uid://bpbe8407leicg" path="res://magic particle.png" id="1_2pxoa"]
-[ext_resource type="Material" uid="uid://dngemvqwac63q" path="res://spell_cast_energy_shot.tres" id="1_nhrtb"]
+[ext_resource type="Material" uid="uid://ci7ht0iutwg7o" path="res://spell_cast.tres" id="1_eeyqi"]
 
 [node name="SpellCast" type="GPUParticles2D"]
 amount = 800
-process_material = ExtResource("1_nhrtb")
+process_material = ExtResource("1_eeyqi")
 texture = ExtResource("1_2pxoa")

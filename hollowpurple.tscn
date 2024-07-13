@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://1rtpojgytv1l"]
+
+[ext_resource type="Script" path="res://hollowpurple.gd" id="1_cdnfp"]
+[ext_resource type="Texture2D" uid="uid://nenuc6surjfg" path="res://flare_01.png" id="2_ul8qw"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_dahgj"]
+resource_local_to_scene = true
+radius = 100.0
+
+[node name="HollowPurple" type="Node2D"]
+script = ExtResource("1_cdnfp")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+color = Color(1, 0.478431, 1, 1)
+energy = 5.72
+texture = ExtResource("2_ul8qw")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_dahgj")
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0, 0, 0, 0.760784)

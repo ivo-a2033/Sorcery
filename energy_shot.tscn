@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://desje1wlomvmk"]
+[gd_scene load_steps=8 format=3 uid="uid://desje1wlomvmk"]
 
 [ext_resource type="Script" path="res://energy_shot.gd" id="1_1inag"]
 [ext_resource type="PackedScene" uid="uid://l07chflahdhp" path="res://spell_cast.tscn" id="2_wd1jk"]
 [ext_resource type="Texture2D" uid="uid://bldoelhrpx231" path="res://muzzle_05.png" id="3_m2qo1"]
+[ext_resource type="Material" uid="uid://dngemvqwac63q" path="res://spell_cast_energy_shot.tres" id="3_xut14"]
 [ext_resource type="Texture2D" uid="uid://d1p6cve1b1i7f" path="res://energy_shot.png" id="4_uboxa"]
 [ext_resource type="Texture2D" uid="uid://nenuc6surjfg" path="res://flare_01.png" id="5_8i07l"]
 
@@ -17,6 +18,7 @@ shape = SubResource("CircleShape2D_uqh3s")
 [node name="SpellCast" parent="." instance=ExtResource("2_wd1jk")]
 position = Vector2(0, -19)
 amount = 200
+process_material = ExtResource("3_xut14")
 texture = ExtResource("3_m2qo1")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

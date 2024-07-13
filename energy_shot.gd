@@ -1,23 +1,24 @@
 extends Area2D
 
-var damage = 48
+@export var damage = 48
 var flip_x = 1
 var velocity = Vector2(0,0)
-var speed = 350
+@export var speed = 350
 var exceptions = []
 var time = 15
+@export var bouncy = true
 
 signal give_energy
 
 func _ready():
 	connect("body_entered", hit_hp)
 	
-func set_velocity():
-	velocity = Vector2(flip_x, 0) * speed
+func set_velocity(vec):
+	velocity = vec.normalized() * speed
 
 func _process(delta):
 	position += velocity * delta
-	Globals.envoirment_brightness = .55 + (.45 * (position - Globals.cam.position).length()/2000)
+	Globals.lower_brightness_to(.55 + (.45 * (position - Globals.cam.position).length()/2000))
 	
 	time -= delta
 	if time <= 0:
@@ -26,6 +27,8 @@ func _process(delta):
 func hit_hp(body):
 	if body.get("hp") != null and not(body in exceptions):
 		body.take_dmg(damage)
-		body.recoil(position)
+		if bouncy:
+			body.recoil(position)
 		emit_signal("give_energy", damage)
 		queue_free()
+		

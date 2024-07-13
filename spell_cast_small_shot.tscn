@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://dxmibjhr1rpth"]
+
+[ext_resource type="Texture2D" uid="uid://bpbe8407leicg" path="res://magic particle.png" id="2_sl6pn"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_0rllj"]
+particle_flag_disable_z = true
+radial_velocity_max = 157.3
+gravity = Vector3(0, 0, 0)
+scale_min = 0.2
+scale_max = 2.0
+hue_variation_min = -0.27
+hue_variation_max = 0.18
+
+[node name="SpellCastSmallShot" type="GPUParticles2D"]
+modulate = Color(0.0976, 0.12322, 0.61, 1)
+amount = 800
+process_material = SubResource("ParticleProcessMaterial_0rllj")
+texture = ExtResource("2_sl6pn")

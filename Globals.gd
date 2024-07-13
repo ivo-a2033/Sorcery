@@ -35,4 +35,10 @@ func _process(delta):
 	for label in remove:
 		labels.remove_at(labels.find(label))
 		label.queue_free()
-	envoirment_brightness = 1
+		
+	if envoirment_brightness < 1:
+		envoirment_brightness += delta * .05                                               
+	
+func lower_brightness_to(n):
+	if envoirment_brightness > n:
+		envoirment_brightness += (n - envoirment_brightness) * 1/60.0 * 2
