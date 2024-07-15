@@ -7,6 +7,7 @@ var velocity = Vector2(0,0)
 var exceptions = []
 var time = 15
 @export var bouncy = true
+@export var affect_lighting = true
 
 signal give_energy
 
@@ -18,7 +19,8 @@ func set_velocity(vec):
 
 func _process(delta):
 	position += velocity * delta
-	Globals.lower_brightness_to(.55 + (.45 * (position - Globals.cam.position).length()/2000))
+	if affect_lighting:
+		Globals.lower_brightness_to(.55 + (.45 * (position - Globals.cam.position).length()/2000))
 	
 	time -= delta
 	if time <= 0:

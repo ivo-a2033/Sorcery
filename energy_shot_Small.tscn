@@ -25,6 +25,7 @@ script = ExtResource("1_yl1os")
 damage = 8
 speed = 800
 bouncy = false
+affect_lighting = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_uqh3s")

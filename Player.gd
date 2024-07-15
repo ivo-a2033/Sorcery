@@ -44,10 +44,19 @@ var code_to_spell = {
 	"11011": "Ghost Dogs",
 	"10110": "Energy Shot",
 	"0110111010100100101": "Hollow Purple",
-	#"0101000010101010100": "Energy Shot Small",
-	"11": "Energy Shot Small",
+	"0101000010101010100": "Energy Shot Small",
+
 }
 var cast_codes = code_to_spell.keys()
+
+var binary_nodes = []
+var nodes_phase = 0
+
+var symbols = {
+	0: load("res://zero_symbol.png"),
+	1: load("res://one_symbol.png")
+}
+
 
 func _ready():
 	if Globals.p1 == null:
@@ -71,10 +80,13 @@ func _ready():
 			"cast": "l"
 		}
 		
-
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	
+	nodes_phase += delta * 5
+	manage_nodes()
+	
+	
 	$UI/HP.value = hp
 	$UI/Ammo.value = ammo/3.0*100
 	$UI/Energy.value = cursed_energy	
@@ -96,12 +108,22 @@ func _process(delta):
 			
 	if Input.is_action_just_pressed(mov_dict["cast"]):
 		cast_code = ""
+		var to_remove = []
+		for i in binary_nodes:
+			to_remove.append(i)
+		
+		for i in to_remove:
+			i.queue_free()
+			
+		binary_nodes.clear()
 		
 	if Input.is_action_pressed(mov_dict["cast"]):
 		if Input.is_action_just_pressed(mov_dict["left"]):
 			cast_code = cast_code + "0"
+			create_binary_node(0)
 		if Input.is_action_just_pressed(mov_dict["right"]):
 			cast_code = cast_code + "1"
+			create_binary_node(1)
 		$UI/CastCode.text = cast_code
 			
 	if cast_code in cast_codes:
@@ -202,7 +224,6 @@ func _process(delta):
 		slash.exceptions.append(self)
 		get_parent().add_child(slash)
 
-
 func get_energy(num):
 	cursed_energy += num
 	
@@ -211,7 +232,6 @@ func spawn_dog(pos):
 	dog.position = pos
 	dog.target = enemy
 	get_parent().add_child(dog)
-	
 	
 func take_dmg(dmg):
 	hp -= dmg
@@ -227,5 +247,16 @@ func recoil(pos):
 	var vec = (position - pos)
 	apply_central_force(vec.normalized() * 100000)
 	
+func create_binary_node(num):
+	var new_bin = Sprite2D.new()
+	new_bin.texture = symbols[num]
+	new_bin.z_index = 2
+	add_child(new_bin)
+	binary_nodes.append(new_bin)
 	
-	
+func manage_nodes():
+	var n = 0
+	for i in binary_nodes:
+		n += 1
+		var power = 32 + len(binary_nodes) * 1
+		i.global_position = global_position + Vector2(power, 0).rotated(n/16.0 * PI * 2 + nodes_phase)

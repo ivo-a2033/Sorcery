@@ -25,6 +25,7 @@ text = "Start
 "
 
 [node name="Technique1" type="MenuButton" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 68.0
 offset_top = 51.0
@@ -41,6 +42,7 @@ popup/item_2/text = "Energy Shot"
 popup/item_2/id = 2
 
 [node name="Technique2" type="MenuButton" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 68.0
 offset_top = 424.0
