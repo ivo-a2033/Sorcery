@@ -16,7 +16,7 @@ friction = 0.5
 friction = 0.5
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7l0gy"]
-size = Vector2(1600, 20)
+size = Vector2(1600, 444)
 
 [node name="World" type="Node2D"]
 
@@ -139,7 +139,7 @@ texture = ExtResource("2_hnyhf")
 stretch_mode = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(800, 900)
+position = Vector2(800, 1112)
 shape = SubResource("RectangleShape2D_7l0gy")
 
 [node name="Camera2D" type="Camera2D" parent="."]

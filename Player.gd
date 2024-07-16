@@ -25,6 +25,8 @@ var ghostdogsscenespawner = load("res://spell_cast_wolf.tscn")
 var shotscene = load("res://energy_shot.tscn")
 var hollowpurple = load("res://hollowpurple.tscn")
 var smallshotscene = load("res://energy_shot_Small.tscn")
+var handscene = load("res://hand.tscn")
+
 
 var enemy 
 signal give_energy
@@ -40,12 +42,12 @@ signal blackhole_cast
 
 var cast_code = ""
 var code_to_spell = {
-	"00110101101": "Black Hole",
+	("0011 0101 1011").replace(" ", ""): "Black Hole",
 	"11011": "Ghost Dogs",
 	"10110": "Energy Shot",
-	"0110111010100100101": "Hollow Purple",
-	"0101000010101010100": "Energy Shot Small",
-
+	("0101 1010 1111 0011").replace(" ", ""): "Hollow Purple",
+	("1010 0100 0010 0000").replace(" ", ""): "Energy Shot Small",
+	("0101 0110").replace(" ", ""): "Hand",
 }
 var cast_codes = code_to_spell.keys()
 
@@ -108,14 +110,7 @@ func _process(delta):
 			
 	if Input.is_action_just_pressed(mov_dict["cast"]):
 		cast_code = ""
-		var to_remove = []
-		for i in binary_nodes:
-			to_remove.append(i)
-		
-		for i in to_remove:
-			i.queue_free()
-			
-		binary_nodes.clear()
+		clear_nodes()
 		
 	if Input.is_action_pressed(mov_dict["cast"]):
 		if Input.is_action_just_pressed(mov_dict["left"]):
@@ -130,6 +125,8 @@ func _process(delta):
 		technique = code_to_spell[cast_code]
 		cast_time = 2
 		cast_code = ""
+		clear_nodes()
+		
 		if technique == "Black Hole":
 			
 			emit_signal("blackhole_cast", self)
@@ -200,6 +197,19 @@ func _process(delta):
 				shot.exceptions.append(self)
 				get_parent().add_child(shot)
 			
+		if technique == "Hand":
+			
+			var label = Label.new()
+			label.text = "CURSED TECHNIQUE: HAND"
+			label.position = position + Vector2(0, -64)
+			get_parent().add_child(label)
+			Globals.labels.append(label)
+			
+			var hand = handscene.instantiate()
+			hand.position = enemy.position + Vector2(0,128)
+			get_parent().add_child(hand)
+
+			
 	if Input.is_action_just_pressed(mov_dict["up"]):
 		apply_central_force(Vector2(0,-1) * jump_force)
 	
@@ -247,6 +257,10 @@ func recoil(pos):
 	var vec = (position - pos)
 	apply_central_force(vec.normalized() * 100000)
 	
+func go(pos, duration):
+	var vec = -(position - pos)
+	apply_central_force(vec * 1/60.0 * 1/duration * 1000)
+	
 func create_binary_node(num):
 	var new_bin = Sprite2D.new()
 	new_bin.texture = symbols[num]
@@ -260,3 +274,13 @@ func manage_nodes():
 		n += 1
 		var power = 32 + len(binary_nodes) * 1
 		i.global_position = global_position + Vector2(power, 0).rotated(n/16.0 * PI * 2 + nodes_phase)
+		
+func clear_nodes():
+	var to_remove = []
+	for i in binary_nodes:
+		to_remove.append(i)
+	
+	for i in to_remove:
+		i.queue_free()
+		
+	binary_nodes.clear()
