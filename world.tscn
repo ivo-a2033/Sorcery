@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://cagpge57ghy61"]
+[gd_scene load_steps=12 format=3 uid="uid://cagpge57ghy61"]
 
 [ext_resource type="Script" path="res://Player.gd" id="1_16lhq"]
 [ext_resource type="Texture2D" uid="uid://bvvptm44vajtn" path="res://guy.png" id="1_gkg26"]
@@ -11,6 +11,11 @@
 friction = 0.5
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_twwtv"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_djocd"]
+font_size = 24
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hanuc"]
 friction = 0.5
@@ -69,10 +74,12 @@ show_percentage = false
 
 [node name="CastCode" type="Label" parent="Player/UI"]
 layout_mode = 0
-offset_left = 659.0
-offset_top = 421.0
-offset_right = 766.0
-offset_bottom = 444.0
+offset_left = 619.0
+offset_top = 412.0
+offset_right = 759.0
+offset_bottom = 446.0
+text = "1101010110"
+label_settings = SubResource("LabelSettings_djocd")
 
 [node name="Player2" type="RigidBody2D" parent="."]
 position = Vector2(944, 496)
@@ -122,11 +129,12 @@ theme_override_font_sizes/font_size = 8
 show_percentage = false
 
 [node name="CastCode" type="Label" parent="Player2/UI"]
-layout_mode = 0
-offset_left = 659.0
-offset_top = 421.0
-offset_right = 766.0
-offset_bottom = 444.0
+offset_left = 619.0
+offset_top = 412.0
+offset_right = 759.0
+offset_bottom = 446.0
+text = "1101010110"
+label_settings = SubResource("LabelSettings_djocd")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 position = Vector2(0, -10)

@@ -3,7 +3,7 @@ extends RigidBody2D
 
 var jump_force = 25000
 var move_force = 500
-var hp = 100
+var hp = 300
 var slash_scene = load("res://slash.tscn")
 var flip_x = 1
 var ammo = 3
@@ -43,8 +43,8 @@ signal blackhole_cast
 var cast_code = ""
 var code_to_spell = {
 	("0011 0101 1011").replace(" ", ""): "Black Hole",
-	"11011": "Ghost Dogs",
-	"10110": "Energy Shot",
+	("1101 0101 10").replace(" ", ""): "Ghost Dogs",
+	"1011": "Energy Shot",
 	("0101 1010 1111 0011").replace(" ", ""): "Hollow Purple",
 	("1010 0100 0010 0000").replace(" ", ""): "Energy Shot Small",
 	("0101 0110").replace(" ", ""): "Hand",
@@ -90,7 +90,7 @@ func _process(delta):
 	manage_nodes()
 	
 	
-	$UI/HP.value = hp
+	$UI/HP.value = hp/3.0
 	$UI/Ammo.value = ammo/3.0*100
 	$UI/Energy.value = cursed_energy	
 
@@ -256,6 +256,9 @@ func _process(delta):
 		slash.set_velocity()
 		slash.exceptions.append(self)
 		get_parent().add_child(slash)
+		
+	if position.length() > 3000:
+		hp -= 50 * delta
 
 func get_energy(num):
 	cursed_energy += num
@@ -275,6 +278,8 @@ func take_dmg(dmg):
 	Globals.labels.append(label)
 	emit_signal("give_energy", dmg)
 	damage_time = .5
+	cast_code = ""
+	clear_nodes()
 
 func recoil(pos):
 	var vec = (position - pos)

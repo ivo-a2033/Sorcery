@@ -37,7 +37,7 @@ func _process(delta):
 		label.queue_free()
 		
 	if envoirment_brightness < 1:
-		envoirment_brightness += delta * .05                                               
+		envoirment_brightness += delta * .55                                               
 	
 func lower_brightness_to(n):
 	if envoirment_brightness > n:
