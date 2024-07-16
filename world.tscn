@@ -129,6 +129,7 @@ theme_override_font_sizes/font_size = 8
 show_percentage = false
 
 [node name="CastCode" type="Label" parent="Player2/UI"]
+layout_mode = 0
 offset_left = 619.0
 offset_top = 412.0
 offset_right = 759.0
