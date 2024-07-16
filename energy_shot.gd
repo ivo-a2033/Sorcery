@@ -5,7 +5,7 @@ var flip_x = 1
 var velocity = Vector2(0,0)
 @export var speed = 350
 var exceptions = []
-var time = 15
+@export var time = 15
 @export var bouncy = true
 @export var affect_lighting = true
 

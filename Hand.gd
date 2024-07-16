@@ -4,7 +4,7 @@ extends Area2D
 var velocity = Vector2(0,-256)
 var pulling = null
 var hand_closed = load("res://hand_closed.png")
-var time = 15
+var time = 20
 var decay = 1
 
 func _ready():

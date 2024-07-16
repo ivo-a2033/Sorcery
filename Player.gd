@@ -26,7 +26,7 @@ var shotscene = load("res://energy_shot.tscn")
 var hollowpurple = load("res://hollowpurple.tscn")
 var smallshotscene = load("res://energy_shot_Small.tscn")
 var handscene = load("res://hand.tscn")
-
+var dragonshotscene = load("res://dragon_shot.tscn")
 
 var enemy 
 signal give_energy
@@ -48,6 +48,7 @@ var code_to_spell = {
 	("0101 1010 1111 0011").replace(" ", ""): "Hollow Purple",
 	("1010 0100 0010 0000").replace(" ", ""): "Energy Shot Small",
 	("0101 0110").replace(" ", ""): "Hand",
+	("1110 1101 1011").replace(" ", ""): "Dragon Shot",
 }
 var cast_codes = code_to_spell.keys()
 
@@ -208,7 +209,29 @@ func _process(delta):
 			var hand = handscene.instantiate()
 			hand.position = enemy.position + Vector2(0,128)
 			get_parent().add_child(hand)
-
+		
+		if technique == "Dragon Shot":
+			
+			var label = Label.new()
+			label.text = "CURSED TECHNIQUE: DRAGON"
+			label.position = position + Vector2(0, -64)
+			get_parent().add_child(label)
+			Globals.labels.append(label)
+			
+			for i in range(8):
+				var shot = dragonshotscene.instantiate()
+				shot.position = position + Vector2(i * 64, Globals.rng.randi_range(256,2048))
+				shot.set_velocity(Vector2(0,-1))
+				shot.exceptions.append(self)
+				get_parent().add_child(shot)
+			
+			for i in range(8):
+				var shot = dragonshotscene.instantiate()
+				shot.position = position + Vector2(-i * 64, Globals.rng.randi_range(256,2048))
+				shot.set_velocity(Vector2(0,-1))
+				shot.exceptions.append(self)
+				get_parent().add_child(shot)
+			
 			
 	if Input.is_action_just_pressed(mov_dict["up"]):
 		apply_central_force(Vector2(0,-1) * jump_force)
@@ -272,8 +295,8 @@ func manage_nodes():
 	var n = 0
 	for i in binary_nodes:
 		n += 1
-		var power = 32 + len(binary_nodes) * 1
-		i.global_position = global_position + Vector2(power, 0).rotated(n/16.0 * PI * 2 + nodes_phase)
+		var power = 32 + 4 * n
+		i.global_position = global_position + Vector2(power, 0).rotated(n/16.0 * PI * 2 + nodes_phase * sin(n+2))
 		
 func clear_nodes():
 	var to_remove = []
