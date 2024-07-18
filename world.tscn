@@ -1,8 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://cagpge57ghy61"]
+[gd_scene load_steps=13 format=3 uid="uid://cagpge57ghy61"]
 
 [ext_resource type="Script" path="res://Player.gd" id="1_16lhq"]
 [ext_resource type="Texture2D" uid="uid://bvvptm44vajtn" path="res://guy.png" id="1_gkg26"]
 [ext_resource type="Texture2D" uid="uid://bkmt0ry5fihm4" path="res://dirt.png" id="2_hnyhf"]
+[ext_resource type="Texture2D" uid="uid://c2n10fiqxgjtc" path="res://shield.png" id="3_vrvmk"]
 [ext_resource type="Script" path="res://Camera2D.gd" id="4_ljgna"]
 [ext_resource type="Texture2D" uid="uid://0kr43xq7ms3e" path="res://sky.png" id="5_rrgyw"]
 [ext_resource type="Script" path="res://CanvasModulate.gd" id="6_rn706"]
@@ -79,6 +80,11 @@ offset_top = 412.0
 offset_right = 759.0
 offset_bottom = 446.0
 label_settings = SubResource("LabelSettings_djocd")
+
+[node name="Shield" type="Sprite2D" parent="Player"]
+modulate = Color(1, 1, 1, 0.67451)
+z_index = 4
+texture = ExtResource("3_vrvmk")
 
 [node name="Player2" type="RigidBody2D" parent="."]
 position = Vector2(944, 496)

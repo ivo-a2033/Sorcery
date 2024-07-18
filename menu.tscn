@@ -59,6 +59,7 @@ popup/item_2/text = "Energy Shot"
 popup/item_2/id = 2
 
 [node name="Grid" type="Control" parent="."]
+visible = false
 anchors_preset = 0
 offset_left = 1144.0
 offset_top = 68.0
@@ -71,61 +72,72 @@ offset_right = 126.0
 offset_bottom = 126.0
 
 [node name="ColorRect2" type="ColorRect" parent="Grid"]
+layout_mode = 0
 offset_left = 128.0
 offset_right = 254.0
 offset_bottom = 126.0
 
 [node name="ColorRect3" type="ColorRect" parent="Grid"]
+layout_mode = 0
 offset_left = 256.0
 offset_right = 382.0
 offset_bottom = 126.0
 
 [node name="ColorRect4" type="ColorRect" parent="Grid"]
+layout_mode = 0
 offset_top = 128.0
 offset_right = 126.0
 offset_bottom = 254.0
 
 [node name="ColorRect5" type="ColorRect" parent="Grid"]
+layout_mode = 0
 offset_left = 128.0
 offset_top = 128.0
 offset_right = 254.0
 offset_bottom = 254.0
 
 [node name="ColorRect6" type="ColorRect" parent="Grid"]
+layout_mode = 0
 offset_left = 256.0
 offset_top = 128.0
 offset_right = 382.0
 offset_bottom = 254.0
 
 [node name="ColorRect7" type="ColorRect" parent="Grid"]
+layout_mode = 0
 offset_top = 256.0
 offset_right = 126.0
 offset_bottom = 382.0
 
 [node name="ColorRect8" type="ColorRect" parent="Grid"]
+layout_mode = 0
 offset_left = 128.0
 offset_top = 256.0
 offset_right = 254.0
 offset_bottom = 382.0
 
 [node name="ColorRect9" type="ColorRect" parent="Grid"]
+layout_mode = 0
 offset_left = 256.0
 offset_top = 256.0
 offset_right = 382.0
 offset_bottom = 382.0
 
 [node name="ColorRect10" type="ColorRect" parent="Grid"]
+layout_mode = 0
 offset_top = 384.0
 offset_right = 126.0
 offset_bottom = 510.0
 
 [node name="ColorRect11" type="ColorRect" parent="Grid"]
+layout_mode = 0
 offset_left = 128.0
 offset_top = 384.0
 offset_right = 254.0
 offset_bottom = 510.0
 
 [node name="ColorRect12" type="ColorRect" parent="Grid"]
+layout_mode = 0
 offset_left = 256.0
 offset_top = 384.0
 offset_right = 382.0
