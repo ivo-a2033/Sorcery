@@ -78,7 +78,6 @@ offset_left = 619.0
 offset_top = 412.0
 offset_right = 759.0
 offset_bottom = 446.0
-text = "1101010110"
 label_settings = SubResource("LabelSettings_djocd")
 
 [node name="Player2" type="RigidBody2D" parent="."]
@@ -134,7 +133,6 @@ offset_left = 619.0
 offset_top = 412.0
 offset_right = 759.0
 offset_bottom = 446.0
-text = "1101010110"
 label_settings = SubResource("LabelSettings_djocd")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
