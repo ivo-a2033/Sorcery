@@ -27,6 +27,7 @@ var hollowpurple = load("res://hollowpurple.tscn")
 var smallshotscene = load("res://energy_shot_Small.tscn")
 var handscene = load("res://hand.tscn")
 var dragonshotscene = load("res://dragon_shot.tscn")
+var rockscene = load("res://rock_wall.tscn")
 
 var enemy 
 signal give_energy
@@ -50,6 +51,7 @@ var code_to_spell = {
 	("0101 0110").replace(" ", ""): "Hand",
 	("1110 1101 1011").replace(" ", ""): "Dragon Shot",
 	("1010 0111").replace(" ", ""): "Shield",
+	("1111 0011 1101").replace(" ", ""): "Rock",
 }
 var cast_codes = code_to_spell.keys()
 
@@ -208,6 +210,13 @@ func _process(delta):
 			if shield_amount > 170:
 				shield_amount = 170
 			
+		if technique == "Rock":
+			dialogue("ROCK")
+			
+			var rock = rockscene.instantiate()
+			rock.position = position
+			get_parent().add_child(rock)
+			
 	if Input.is_action_just_pressed(mov_dict["up"]):
 		apply_central_force(Vector2(0,-1) * jump_force)
 	
@@ -231,9 +240,7 @@ func _process(delta):
 		slash.set_velocity()
 		slash.exceptions.append(self)
 		get_parent().add_child(slash)
-		
-	if position.length() > 3000:
-		hp -= 50 * delta
+
 
 
 func dialogue(text):

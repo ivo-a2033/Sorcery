@@ -1,0 +1,20 @@
+[gd_scene load_steps=6 format=3 uid="uid://bwkc0bfw0y51i"]
+
+[ext_resource type="Script" path="res://heal_effect.gd" id="1_khus1"]
+[ext_resource type="PackedScene" uid="uid://l07chflahdhp" path="res://spell_cast.tscn" id="2_bt858"]
+[ext_resource type="Material" uid="uid://dngemvqwac63q" path="res://spell_cast_energy_shot.tres" id="3_474fp"]
+[ext_resource type="Texture2D" uid="uid://bldoelhrpx231" path="res://muzzle_05.png" id="4_54065"]
+[ext_resource type="Texture2D" uid="uid://nenuc6surjfg" path="res://flare_01.png" id="6_okkfh"]
+
+[node name="Heal" type="Node2D"]
+script = ExtResource("1_khus1")
+
+[node name="SpellCast" parent="." instance=ExtResource("2_bt858")]
+position = Vector2(0, -19)
+amount = 200
+process_material = ExtResource("3_474fp")
+texture = ExtResource("4_54065")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+texture = ExtResource("6_okkfh")
+texture_scale = 2.0

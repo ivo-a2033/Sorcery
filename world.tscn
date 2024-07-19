@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cagpge57ghy61"]
+[gd_scene load_steps=16 format=3 uid="uid://cagpge57ghy61"]
 
 [ext_resource type="Script" path="res://Player.gd" id="1_16lhq"]
 [ext_resource type="Texture2D" uid="uid://bvvptm44vajtn" path="res://guy.png" id="1_gkg26"]
@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://0kr43xq7ms3e" path="res://sky.png" id="5_rrgyw"]
 [ext_resource type="Script" path="res://CanvasModulate.gd" id="6_rn706"]
 [ext_resource type="PackedScene" uid="uid://cf1nfc4bgo03j" path="res://rock_wall.tscn" id="8_js48r"]
-[ext_resource type="Script" path="res://rock_wall.gd" id="9_qpi27"]
+[ext_resource type="Script" path="res://Barrier.gd" id="9_l4v44"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_8j0bx"]
 friction = 0.5
@@ -25,6 +25,9 @@ friction = 0.5
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7l0gy"]
 size = Vector2(1600, 444)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bmwo6"]
+radius = 1376.22
 
 [node name="World" type="Node2D"]
 
@@ -179,8 +182,13 @@ script = ExtResource("6_rn706")
 
 [node name="RockWall" parent="." instance=ExtResource("8_js48r")]
 position = Vector2(804, 719)
-script = ExtResource("9_qpi27")
 
 [node name="RockWall2" parent="." instance=ExtResource("8_js48r")]
-position = Vector2(1214, 653)
-script = ExtResource("9_qpi27")
+position = Vector2(699, 510)
+
+[node name="Barrier" type="Area2D" parent="."]
+script = ExtResource("9_l4v44")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Barrier"]
+position = Vector2(800, 500)
+shape = SubResource("CircleShape2D_bmwo6")

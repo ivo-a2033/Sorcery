@@ -10,6 +10,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	hp -= 2500 * delta * 1/1000.0
 	if hp < 0:
 		queue_free()
 		
