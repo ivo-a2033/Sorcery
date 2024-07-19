@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://cagpge57ghy61"]
+[gd_scene load_steps=15 format=3 uid="uid://cagpge57ghy61"]
 
 [ext_resource type="Script" path="res://Player.gd" id="1_16lhq"]
 [ext_resource type="Texture2D" uid="uid://bvvptm44vajtn" path="res://guy.png" id="1_gkg26"]
@@ -7,6 +7,8 @@
 [ext_resource type="Script" path="res://Camera2D.gd" id="4_ljgna"]
 [ext_resource type="Texture2D" uid="uid://0kr43xq7ms3e" path="res://sky.png" id="5_rrgyw"]
 [ext_resource type="Script" path="res://CanvasModulate.gd" id="6_rn706"]
+[ext_resource type="PackedScene" uid="uid://cf1nfc4bgo03j" path="res://rock_wall.tscn" id="8_js48r"]
+[ext_resource type="Script" path="res://rock_wall.gd" id="9_qpi27"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_8j0bx"]
 friction = 0.5
@@ -82,7 +84,7 @@ offset_bottom = 446.0
 label_settings = SubResource("LabelSettings_djocd")
 
 [node name="Shield" type="Sprite2D" parent="Player"]
-modulate = Color(1, 1, 1, 0.67451)
+modulate = Color(1, 1, 1, 0.666667)
 z_index = 4
 texture = ExtResource("3_vrvmk")
 
@@ -141,6 +143,11 @@ offset_right = 759.0
 offset_bottom = 446.0
 label_settings = SubResource("LabelSettings_djocd")
 
+[node name="Shield" type="Sprite2D" parent="Player2"]
+modulate = Color(1, 1, 1, 0.666667)
+z_index = 4
+texture = ExtResource("3_vrvmk")
+
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 position = Vector2(0, -10)
 
@@ -169,3 +176,11 @@ stretch_mode = 1
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 script = ExtResource("6_rn706")
+
+[node name="RockWall" parent="." instance=ExtResource("8_js48r")]
+position = Vector2(804, 719)
+script = ExtResource("9_qpi27")
+
+[node name="RockWall2" parent="." instance=ExtResource("8_js48r")]
+position = Vector2(1214, 653)
+script = ExtResource("9_qpi27")

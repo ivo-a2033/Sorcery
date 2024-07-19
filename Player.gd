@@ -49,6 +49,7 @@ var code_to_spell = {
 	("1010 0100 0010 0000").replace(" ", ""): "Energy Shot Small",
 	("0101 0110").replace(" ", ""): "Hand",
 	("1110 1101 1011").replace(" ", ""): "Dragon Shot",
+	("1010 0111").replace(" ", ""): "Shield",
 }
 var cast_codes = code_to_spell.keys()
 
@@ -61,6 +62,8 @@ var symbols = {
 }
 
 var label_settings = load("res://new_label_settings.tres")
+var shield_amount = 0
+
 
 func _ready():
 	if Globals.p1 == null:
@@ -94,6 +97,7 @@ func _process(delta):
 	$UI/HP.value = hp/3.0
 	$UI/Ammo.value = ammo/3.0*100
 	$UI/Energy.value = cursed_energy	
+	$Shield.modulate = Color8(255,255,255, shield_amount)
 
 	cursed_energy += delta * 3
 		
@@ -130,13 +134,7 @@ func _process(delta):
 		clear_nodes()
 		
 		if technique == "Black Hole":
-			
-			emit_signal("blackhole_cast", self)
-			var label = Label.new()
-			label.text = "CURSED TECHNIQUE: AURA"
-			label.position = position + Vector2(0, -64)
-			get_parent().add_child(label)
-			Globals.labels.append(label)
+			dialogue("AURA")
 	
 			var hole = blackhole.instantiate()
 			hole.position = position
@@ -144,12 +142,7 @@ func _process(delta):
 			get_parent().add_child(hole)
 			
 		if technique == "Ghost Dogs":
-			
-			var label = Label.new()
-			label.text = "CURSED TECHNIQUE: DAWG"
-			label.position = position + Vector2(0, -64)
-			get_parent().add_child(label)
-			Globals.labels.append(label)
+			dialogue("DAWG")
 			
 			var dog = ghostdogsscenespawner.instantiate()
 			dog.position = position
@@ -157,12 +150,7 @@ func _process(delta):
 			dog.connect("spawn_dog", spawn_dog)
 			
 		if technique == "Energy Shot":
-			
-			var label = Label.new()
-			label.text = "CURSED TECHNIQUE: BALL"
-			label.position = position + Vector2(0, -64)
-			get_parent().add_child(label)
-			Globals.labels.append(label)
+			dialogue("SHOT")
 			
 			var shot = shotscene.instantiate()
 			shot.position = position
@@ -171,13 +159,8 @@ func _process(delta):
 			get_parent().add_child(shot)
 			
 		if technique == "Hollow Purple":
-			
 			emit_signal("blackhole_cast", self)
-			var label = Label.new()
-			label.text = "CURSED TECHNIQUE: HOLLOW PURPLE"
-			label.position = position + Vector2(0, -64)
-			get_parent().add_child(label)
-			Globals.labels.append(label)
+			dialogue("HOLLOW PURPLE")
 	
 			var purple = hollowpurple.instantiate()
 			purple.position = position
@@ -185,12 +168,7 @@ func _process(delta):
 			get_parent().add_child(purple)
 			
 		if technique == "Energy Shot Small":
-			
-			var label = Label.new()
-			label.text = "CURSED TECHNIQUE: THOUSAND SHOTS"
-			label.position = position + Vector2(0, -64)
-			get_parent().add_child(label)
-			Globals.labels.append(label)
+			dialogue("INFINITE SHOTS")
 			
 			for i in range(60):	
 				var shot = smallshotscene.instantiate()
@@ -200,24 +178,14 @@ func _process(delta):
 				get_parent().add_child(shot)
 			
 		if technique == "Hand":
-			
-			var label = Label.new()
-			label.text = "CURSED TECHNIQUE: HAND"
-			label.position = position + Vector2(0, -64)
-			get_parent().add_child(label)
-			Globals.labels.append(label)
+			dialogue("HAND")
 			
 			var hand = handscene.instantiate()
 			hand.position = enemy.position + Vector2(0,128)
 			get_parent().add_child(hand)
 		
 		if technique == "Dragon Shot":
-			
-			var label = Label.new()
-			label.text = "CURSED TECHNIQUE: DRAGON"
-			label.position = position + Vector2(0, -64)
-			get_parent().add_child(label)
-			Globals.labels.append(label)
+			dialogue("DRAGON")
 			
 			for i in range(8):
 				var shot = dragonshotscene.instantiate()
@@ -232,7 +200,13 @@ func _process(delta):
 				shot.set_velocity(Vector2(0,-1))
 				shot.exceptions.append(self)
 				get_parent().add_child(shot)
+				
+		if technique == "Shield":
+			dialogue("SHIELD")
+			shield_amount += 85
 			
+			if shield_amount > 170:
+				shield_amount = 170
 			
 	if Input.is_action_just_pressed(mov_dict["up"]):
 		apply_central_force(Vector2(0,-1) * jump_force)
@@ -261,6 +235,15 @@ func _process(delta):
 	if position.length() > 3000:
 		hp -= 50 * delta
 
+
+func dialogue(text):
+	var label = Label.new()
+	label.text = "CURSED TECHNIQUE: " + text
+	label.position = position + Vector2(0, -64)
+	get_parent().add_child(label)
+	Globals.labels.append(label)	
+	
+	
 func get_energy(num):
 	cursed_energy += num
 	
@@ -271,15 +254,20 @@ func spawn_dog(pos):
 	get_parent().add_child(dog)
 	
 func take_dmg(dmg):
-	hp -= dmg
-	var label = Label.new()
-	label.label_settings = label_settings
-	label.text = "-" + str(dmg)
-	label.position = position + Vector2(Globals.rng.randf_range(0,64), 0).rotated(Globals.rng.randf_range(0, PI * 2))
-	get_parent().add_child(label)
-	Globals.labels.append(label)
-	emit_signal("give_energy", dmg)
-	damage_time = .5
+	if shield_amount > dmg:
+		shield_amount -= dmg
+	else:
+		dmg -= shield_amount
+		shield_amount = 0
+		hp -= dmg
+		var label = Label.new()
+		label.label_settings = label_settings
+		label.text = "-" + str(dmg)
+		label.position = position + Vector2(Globals.rng.randf_range(0,64), 0).rotated(Globals.rng.randf_range(0, PI * 2))
+		get_parent().add_child(label)
+		Globals.labels.append(label)
+		emit_signal("give_energy", dmg)
+		damage_time = .5
 	cast_code = ""
 	clear_nodes()
 
