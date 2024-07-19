@@ -2,9 +2,20 @@
 
 [ext_resource type="Script" path="res://heal_effect.gd" id="1_khus1"]
 [ext_resource type="PackedScene" uid="uid://l07chflahdhp" path="res://spell_cast.tscn" id="2_bt858"]
-[ext_resource type="Material" uid="uid://dngemvqwac63q" path="res://spell_cast_energy_shot.tres" id="3_474fp"]
 [ext_resource type="Texture2D" uid="uid://bldoelhrpx231" path="res://muzzle_05.png" id="4_54065"]
 [ext_resource type="Texture2D" uid="uid://nenuc6surjfg" path="res://flare_01.png" id="6_okkfh"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_jpv2l"]
+lifetime_randomness = 1.0
+particle_flag_disable_z = true
+angle_min = -20.0
+angle_max = 20.0
+radial_velocity_min = -314.61
+radial_velocity_max = 89.89
+gravity = Vector3(0, -150, 0)
+scale_min = 0.02
+scale_max = 0.2
+color = Color(0.564706, 1, 0.380392, 0.105882)
 
 [node name="Heal" type="Node2D"]
 script = ExtResource("1_khus1")
@@ -12,7 +23,7 @@ script = ExtResource("1_khus1")
 [node name="SpellCast" parent="." instance=ExtResource("2_bt858")]
 position = Vector2(0, -19)
 amount = 200
-process_material = ExtResource("3_474fp")
+process_material = SubResource("ParticleProcessMaterial_jpv2l")
 texture = ExtResource("4_54065")
 
 [node name="PointLight2D" type="PointLight2D" parent="."]

@@ -28,6 +28,8 @@ var smallshotscene = load("res://energy_shot_Small.tscn")
 var handscene = load("res://hand.tscn")
 var dragonshotscene = load("res://dragon_shot.tscn")
 var rockscene = load("res://rock_wall.tscn")
+var healeffectscene = load("res://heal_effect.tscn")
+
 
 var enemy 
 signal give_energy
@@ -52,6 +54,7 @@ var code_to_spell = {
 	("1110 1101 1011").replace(" ", ""): "Dragon Shot",
 	("1010 0111").replace(" ", ""): "Shield",
 	("1111 0011 1101").replace(" ", ""): "Rock",
+	("1010 0000 0101").replace(" ", ""): "Heal",
 }
 var cast_codes = code_to_spell.keys()
 
@@ -217,6 +220,14 @@ func _process(delta):
 			rock.position = position
 			get_parent().add_child(rock)
 			
+		if technique == "Heal":
+			dialogue("HEAL")
+			
+			var healeffect = healeffectscene.instantiate()
+			add_child(healeffect)
+			
+			
+			
 	if Input.is_action_just_pressed(mov_dict["up"]):
 		apply_central_force(Vector2(0,-1) * jump_force)
 	
@@ -259,6 +270,10 @@ func spawn_dog(pos):
 	dog.position = pos
 	dog.target = enemy
 	get_parent().add_child(dog)
+	
+func heal(amount):
+	hp += amount
+	hp = min(300, hp)
 	
 func take_dmg(dmg):
 	if shield_amount > dmg:
