@@ -23,6 +23,8 @@ func _process(delta):
 		zoom_ = clamp(zoom_, .95, 2)
 		
 	zoom = Vector2(1,1) * zoom_
+	
+	$AllCastCodes.visible = Input.is_action_pressed("esc")
 
 func pan_to_player(p):
 	sleep = 2
