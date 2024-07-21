@@ -1,9 +1,11 @@
-[gd_scene load_steps=15 format=3 uid="uid://cagpge57ghy61"]
+[gd_scene load_steps=17 format=3 uid="uid://cagpge57ghy61"]
 
 [ext_resource type="Script" path="res://Player.gd" id="1_16lhq"]
 [ext_resource type="Texture2D" uid="uid://bvvptm44vajtn" path="res://guy.png" id="1_gkg26"]
 [ext_resource type="Texture2D" uid="uid://bkmt0ry5fihm4" path="res://dirt.png" id="2_hnyhf"]
+[ext_resource type="Texture2D" uid="uid://c517sxh1r22ig" path="res://hpbarframe.png" id="3_o0mvh"]
 [ext_resource type="Texture2D" uid="uid://c2n10fiqxgjtc" path="res://shield.png" id="3_vrvmk"]
+[ext_resource type="Texture2D" uid="uid://ssupgmq67fej" path="res://hpbarfill.png" id="4_7gxey"]
 [ext_resource type="Script" path="res://Camera2D.gd" id="4_ljgna"]
 [ext_resource type="Texture2D" uid="uid://0kr43xq7ms3e" path="res://sky.png" id="5_rrgyw"]
 [ext_resource type="Script" path="res://CanvasModulate.gd" id="6_rn706"]
@@ -31,7 +33,7 @@ radius = 1376.22
 [node name="World" type="Node2D"]
 
 [node name="Player" type="RigidBody2D" parent="."]
-position = Vector2(695, 496)
+position = Vector2(619, 700)
 physics_material_override = SubResource("PhysicsMaterial_8j0bx")
 lock_rotation = true
 linear_damp = 1.0
@@ -51,32 +53,6 @@ offset_top = -496.0
 offset_right = -655.0
 offset_bottom = -456.0
 
-[node name="HP" type="ProgressBar" parent="Player/UI"]
-layout_mode = 0
-offset_left = 644.0
-offset_top = 450.0
-offset_right = 744.0
-offset_bottom = 466.0
-theme_override_font_sizes/font_size = 8
-
-[node name="Ammo" type="ProgressBar" parent="Player/UI"]
-layout_mode = 0
-offset_left = 659.0
-offset_top = 466.0
-offset_right = 713.0
-offset_bottom = 476.0
-theme_override_font_sizes/font_size = 8
-show_percentage = false
-
-[node name="Energy" type="ProgressBar" parent="Player/UI"]
-layout_mode = 0
-offset_left = 659.0
-offset_top = 476.0
-offset_right = 713.0
-offset_bottom = 486.0
-theme_override_font_sizes/font_size = 8
-show_percentage = false
-
 [node name="CastCode" type="Label" parent="Player/UI"]
 layout_mode = 0
 offset_left = 619.0
@@ -85,13 +61,23 @@ offset_right = 759.0
 offset_bottom = 446.0
 label_settings = SubResource("LabelSettings_djocd")
 
+[node name="HP" type="TextureProgressBar" parent="Player/UI"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(4, 4)
+max_value = 300.0
+value = 40.0
+texture_under = ExtResource("3_o0mvh")
+texture_progress = ExtResource("4_7gxey")
+
 [node name="Shield" type="Sprite2D" parent="Player"]
 modulate = Color(1, 1, 1, 0.666667)
 z_index = 4
 texture = ExtResource("3_vrvmk")
 
 [node name="Player2" type="RigidBody2D" parent="."]
-position = Vector2(944, 496)
+position = Vector2(1008, 717)
 physics_material_override = SubResource("PhysicsMaterial_hanuc")
 lock_rotation = true
 linear_damp = 1.0
@@ -111,32 +97,6 @@ offset_top = -496.0
 offset_right = -655.0
 offset_bottom = -456.0
 
-[node name="HP" type="ProgressBar" parent="Player2/UI"]
-layout_mode = 0
-offset_left = 644.0
-offset_top = 450.0
-offset_right = 744.0
-offset_bottom = 466.0
-theme_override_font_sizes/font_size = 8
-
-[node name="Ammo" type="ProgressBar" parent="Player2/UI"]
-layout_mode = 0
-offset_left = 659.0
-offset_top = 466.0
-offset_right = 713.0
-offset_bottom = 476.0
-theme_override_font_sizes/font_size = 8
-show_percentage = false
-
-[node name="Energy" type="ProgressBar" parent="Player2/UI"]
-layout_mode = 0
-offset_left = 659.0
-offset_top = 476.0
-offset_right = 713.0
-offset_bottom = 486.0
-theme_override_font_sizes/font_size = 8
-show_percentage = false
-
 [node name="CastCode" type="Label" parent="Player2/UI"]
 layout_mode = 0
 offset_left = 619.0
@@ -144,6 +104,17 @@ offset_top = 412.0
 offset_right = 759.0
 offset_bottom = 446.0
 label_settings = SubResource("LabelSettings_djocd")
+
+[node name="HP" type="TextureProgressBar" parent="Player2/UI"]
+layout_mode = 0
+offset_left = 1350.0
+offset_right = 1414.0
+offset_bottom = 40.0
+scale = Vector2(-4, 4)
+max_value = 300.0
+value = 40.0
+texture_under = ExtResource("3_o0mvh")
+texture_progress = ExtResource("4_7gxey")
 
 [node name="Shield" type="Sprite2D" parent="Player2"]
 modulate = Color(1, 1, 1, 0.666667)
@@ -180,6 +151,7 @@ stretch_mode = 1
 script = ExtResource("6_rn706")
 
 [node name="Barrier" type="Area2D" parent="."]
+visible = false
 script = ExtResource("9_l4v44")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Barrier"]

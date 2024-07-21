@@ -1,20 +1,16 @@
-[gd_scene load_steps=4 format=3 uid="uid://cf1nfc4bgo03j"]
+[gd_scene load_steps=3 format=3 uid="uid://cf1nfc4bgo03j"]
 
 [ext_resource type="Script" path="res://rock_wall.gd" id="1_je703"]
 [ext_resource type="Texture2D" uid="uid://b5qwn3p2pkyfo" path="res://rock_wall.png" id="1_tm42x"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_eqna3"]
-size = Vector2(56, 116)
 
 [node name="RockWall" type="RigidBody2D"]
 mass = 100.0
 gravity_scale = 0.0
 script = ExtResource("1_je703")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-2, -1)
-shape = SubResource("RectangleShape2D_eqna3")
-
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(2, 2)
 texture = ExtResource("1_tm42x")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(20, -58, -30, -58, -34, -17, -33, 1, -28, 9, -28, 23, -28, 35, -20, 42, -20, 49, -15, 55, -8, 57, 23, 57, 24, 28, 29, 14, 29, -6, 24, -19, 29, -34)

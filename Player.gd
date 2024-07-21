@@ -69,6 +69,7 @@ var symbols = {
 var label_settings = load("res://new_label_settings.tres")
 var shield_amount = 0
 
+var ui_hp_pos = Vector2(0,0) - Vector2(800,450) #windowsize / 2
 
 func _ready():
 	if Globals.p1 == null:
@@ -92,18 +93,21 @@ func _ready():
 			"cast": "l"
 		}
 		
+		ui_hp_pos = Vector2(1300,0) - Vector2(800,450) #windowsize / 2
+		
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	
 	nodes_phase += delta * 5
 	manage_nodes()
 	
-	
-	$UI/HP.value = hp/3.0
-	$UI/Ammo.value = ammo/3.0*100
-	$UI/Energy.value = cursed_energy	
+	$UI/HP.value = hp/300.0 * 260 + 40
 	$Shield.modulate = Color8(255,255,255, shield_amount)
-
+	
+	#hp bar stabilization
+	$UI/HP.global_position = Globals.cam.global_position + ui_hp_pos / Globals.cam.zoom_
+	$UI/HP.scale = 1.0/Globals.cam.zoom_ * Vector2(1,1) * 4
+	
 	cursed_energy += delta * 3
 		
 
