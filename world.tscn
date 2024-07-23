@@ -145,7 +145,7 @@ offset_right = 318.0
 offset_bottom = 178.0
 text = "0011 0101 1011: Black Hole
 1101 0101 10: Ghost Dogs
-1011: Energy Shot
+1011 10: Energy Shot
 0101 1010 1111 0011: Hollow Purple
 1010 0100 0010 0000: Energy Shot Small
 0101 0110: Hand
@@ -153,6 +153,15 @@ text = "0011 0101 1011: Black Hole
 1010 0111: Shield
 1111 0011 1101: Rock
 1010 0000 0101: Heal"
+label_settings = SubResource("LabelSettings_djocd")
+
+[node name="GameEnd" type="Label" parent="Camera2D"]
+offset_left = -249.0
+offset_top = -226.0
+offset_right = 318.0
+offset_bottom = 178.0
+text = "Game Over
+Press R to restart"
 label_settings = SubResource("LabelSettings_djocd")
 
 [node name="Sky" type="TextureRect" parent="."]

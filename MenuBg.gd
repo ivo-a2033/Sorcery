@@ -9,7 +9,7 @@ var push_force = 1000
 func _ready():
 	rng = Globals.rng
 	
-	for i in range(500):
+	for i in range(200):
 		var points = []
 		var origin = Vector2(rng.randi_range(0,1600), rng.randi_range(-200,900))
 		var mysize = rng.randi_range(10,50)

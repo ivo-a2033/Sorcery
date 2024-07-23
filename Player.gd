@@ -43,11 +43,14 @@ var damage_time = 0
 
 signal blackhole_cast
 
+var all_scenes = [blackhole, ghostdogsscene, ghostdogsscenespawner, shotscene, hollowpurple,
+					smallshotscene, handscene, dragonshotscene, rockscene, healeffectscene]
+
 var cast_code = ""
 var code_to_spell = {
-	("0011 0101 1011").replace(" ", ""): "Black Hole",
+	("0011 0101").replace(" ", ""): "Black Hole",
 	("1101 0101 10").replace(" ", ""): "Ghost Dogs",
-	"1011": "Energy Shot",
+	("1011 10").replace(" ", ""): "Energy Shot",
 	("0101 1010 1111 0011").replace(" ", ""): "Hollow Purple",
 	("1010 0100 0010 0000").replace(" ", ""): "Energy Shot Small",
 	("0101 0110").replace(" ", ""): "Hand",
@@ -71,6 +74,12 @@ var shield_amount = 0
 
 var ui_hp_pos = Vector2(0,0) - Vector2(800,450) #windowsize / 2
 
+func stop_stutter():
+	for i in all_scenes:
+		var a = i.instantiate()
+		a.queue_free()
+		
+		
 func _ready():
 	if Globals.p1 == null:
 		Globals.p1 = self
@@ -95,7 +104,8 @@ func _ready():
 		
 		ui_hp_pos = Vector2(1300,0) - Vector2(800,450) #windowsize / 2
 		
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+	stop_stutter()
+		
 func _process(delta):
 	
 	nodes_phase += delta * 5
@@ -135,6 +145,14 @@ func _process(delta):
 			cast_code = cast_code + "1"
 			create_binary_node(1)
 		$UI/CastCode.text = cast_code
+	else:
+		physics_material_override.friction = .8
+		if Input.is_action_pressed(mov_dict["left"]):
+			apply_central_force(Vector2(-1,0) * move_force)
+			physics_material_override.friction = .1
+		if Input.is_action_pressed(mov_dict["right"]):
+			apply_central_force(Vector2(1,0) * move_force)
+			physics_material_override.friction = .1
 			
 	if cast_code in cast_codes:
 		technique = code_to_spell[cast_code]
@@ -236,13 +254,7 @@ func _process(delta):
 		apply_central_force(Vector2(0,-1) * jump_force)
 	
 	
-	physics_material_override.friction = .8
-	if Input.is_action_pressed(mov_dict["left"]):
-		apply_central_force(Vector2(-1,0) * move_force)
-		physics_material_override.friction = .1
-	if Input.is_action_pressed(mov_dict["right"]):
-		apply_central_force(Vector2(1,0) * move_force)
-		physics_material_override.friction = .1
+	
 		
 	flip_x = sign(enemy.position.x - position.x)
 	ammo += delta
@@ -255,7 +267,10 @@ func _process(delta):
 		slash.set_velocity()
 		slash.exceptions.append(self)
 		get_parent().add_child(slash)
-
+	
+	
+	if hp < 0:
+		hp = -9999
 
 
 func dialogue(text):

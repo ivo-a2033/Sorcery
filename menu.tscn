@@ -63,18 +63,21 @@ popup/item_2/text = "Energy Shot"
 popup/item_2/id = 2
 
 [node name="RuneHeal" type="Sprite2D" parent="."]
+visible = false
 position = Vector2(1395, 135)
 scale = Vector2(4, 4)
 texture = ExtResource("3_psymw")
 script = ExtResource("4_1xib8")
 
 [node name="RuneProtection" type="Sprite2D" parent="."]
+visible = false
 position = Vector2(1407, 292)
 scale = Vector2(4, 4)
 texture = ExtResource("4_q71u5")
 script = ExtResource("4_1xib8")
 
 [node name="RuneSwift" type="Sprite2D" parent="."]
+visible = false
 position = Vector2(1413, 459)
 scale = Vector2(4, 4)
 texture = ExtResource("5_mbxyk")

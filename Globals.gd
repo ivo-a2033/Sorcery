@@ -24,6 +24,8 @@ func _process(delta):
 		var t = 200 + int(55 * envoirment_brightness)
 		world_canvas.color = Color8(v,v,v,t)
 	
+	if Input.is_action_just_pressed("r"):
+		get_tree().change_scene_to_packed(load("res://menu.tscn"))
 	
 	var remove = []
 	for label in labels:

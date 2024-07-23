@@ -25,7 +25,8 @@ func _process(delta):
 	zoom = Vector2(1,1) * zoom_
 	
 	$AllCastCodes.visible = Input.is_action_pressed("esc")
-
+	$GameEnd.visible = (Globals.p1.hp <= 0 or Globals.p2.hp <= 0)
+	
 func pan_to_player(p):
 	sleep = 2
 	pan_target = p
