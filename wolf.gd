@@ -6,7 +6,7 @@ var velocity = Vector2(0,0)
 var time = 8
 var speed = 1200
 var damage = 20
-
+var power_level
 
 func _ready():
 	$Area2D.connect("body_entered", hit)
@@ -28,5 +28,5 @@ func _process(delta):
 		
 func hit(body):
 	if body == target:
-		body.take_dmg(damage)
+		body.take_dmg(damage * power_level)
 		queue_free()

@@ -4,7 +4,7 @@ extends Node2D
 var rng
 var all_polys = []
 signal clicky
-var push_force = 1000
+var push_force = 600
 
 func _ready():
 	rng = Globals.rng

@@ -10,6 +10,7 @@ var exceptions = []
 @export var affect_lighting = true
 
 signal give_energy
+var power_level = 1
 
 func _ready():
 	connect("body_entered", hit_hp)
@@ -28,7 +29,7 @@ func _process(delta):
 
 func hit_hp(body):
 	if body.get("hp") != null and not(body in exceptions):
-		body.take_dmg(damage)
+		body.take_dmg(damage * power_level)
 		if bouncy:
 			body.recoil(position)
 		emit_signal("give_energy", damage)

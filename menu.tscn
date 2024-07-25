@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://2ejbgm4ur5h3"]
+[gd_scene load_steps=15 format=3 uid="uid://2ejbgm4ur5h3"]
 
 [ext_resource type="Script" path="res://Menu.gd" id="1_xq1hh"]
 [ext_resource type="Script" path="res://MenuBg.gd" id="2_p5tdk"]
@@ -6,6 +6,33 @@
 [ext_resource type="Script" path="res://Draggable.gd" id="4_1xib8"]
 [ext_resource type="Texture2D" uid="uid://hro25xwoa44g" path="res://runeofprotection.png" id="4_q71u5"]
 [ext_resource type="Texture2D" uid="uid://d02aorr0d4wxs" path="res://runeofswift.png" id="5_mbxyk"]
+[ext_resource type="Script" path="res://RunesZone.gd" id="7_ej1ds"]
+[ext_resource type="Texture2D" uid="uid://c77q0o5troons" path="res://runeofpower.png" id="8_tam8y"]
+[ext_resource type="Texture2D" uid="uid://bhpinkl1e76qc" path="res://runeofluck.png" id="9_0nrjx"]
+[ext_resource type="Texture2D" uid="uid://d6qs5ka3pbvo" path="res://runeofbloodlust.png" id="10_rqsaj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r1crh"]
+size = Vector2(530, 203)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3g7ts"]
+bg_color = Color(0.10748, 0.10748, 0.10748, 1)
+border_width_left = 12
+border_width_top = 12
+border_width_right = 12
+border_width_bottom = 12
+border_color = Color(0.295867, 0.295867, 0.295866, 1)
+border_blend = true
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_color = Color(0.02, 0, 0.12, 0.6)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_f5rra"]
+radius = 16.298
+
+[sub_resource type="LabelSettings" id="LabelSettings_8b2kk"]
+font_size = 24
 
 [node name="Menu" type="Control"]
 layout_mode = 3
@@ -28,57 +55,178 @@ offset_bottom = 843.0
 text = "Start
 "
 
-[node name="Technique1" type="MenuButton" parent="."]
-visible = false
-layout_mode = 0
-offset_left = 68.0
-offset_top = 51.0
-offset_right = 322.0
-offset_bottom = 212.0
-text = "Abnormal Technique:"
-flat = false
-item_count = 3
-popup/item_0/text = "Black Hole"
-popup/item_0/id = 0
-popup/item_1/text = "Ghost Dogs"
-popup/item_1/id = 1
-popup/item_2/text = "Energy Shot"
-popup/item_2/id = 2
+[node name="P1Runes" type="Area2D" parent="."]
+z_index = -1
+position = Vector2(102, 89)
+script = ExtResource("7_ej1ds")
 
-[node name="Technique2" type="MenuButton" parent="."]
-visible = false
-layout_mode = 0
-offset_left = 68.0
-offset_top = 424.0
-offset_right = 322.0
-offset_bottom = 585.0
-text = "Abnormal Technique:"
-flat = false
-item_count = 3
-popup/item_0/text = "Black Hole"
-popup/item_0/id = 0
-popup/item_1/text = "Ghost Dogs"
-popup/item_1/id = 1
-popup/item_2/text = "Energy Shot"
-popup/item_2/id = 2
+[node name="CollisionShape2D" type="CollisionShape2D" parent="P1Runes"]
+position = Vector2(255, 91.5)
+shape = SubResource("RectangleShape2D_r1crh")
+
+[node name="Panel" type="Panel" parent="P1Runes"]
+offset_right = 512.0
+offset_bottom = 185.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_3g7ts")
+
+[node name="P2Runes" type="Area2D" parent="."]
+z_index = -1
+position = Vector2(102, 523)
+script = ExtResource("7_ej1ds")
+my_id = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="P2Runes"]
+position = Vector2(255, 91.5)
+shape = SubResource("RectangleShape2D_r1crh")
+
+[node name="Panel" type="Panel" parent="P2Runes"]
+offset_right = 512.0
+offset_bottom = 185.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_3g7ts")
 
 [node name="RuneHeal" type="Sprite2D" parent="."]
-visible = false
 position = Vector2(1395, 135)
 scale = Vector2(4, 4)
 texture = ExtResource("3_psymw")
 script = ExtResource("4_1xib8")
+rune_name = "heal"
+
+[node name="Area2D" type="Area2D" parent="RuneHeal"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RuneHeal/Area2D"]
+shape = SubResource("CircleShape2D_f5rra")
+
+[node name="Label" type="Label" parent="RuneHeal"]
+visible = false
+offset_left = 18.0
+offset_top = -10.0
+offset_right = 203.0
+offset_bottom = 61.0
+scale = Vector2(0.25, 0.25)
+text = "25% heal of all
+ damage dealt"
+label_settings = SubResource("LabelSettings_8b2kk")
 
 [node name="RuneProtection" type="Sprite2D" parent="."]
-visible = false
 position = Vector2(1407, 292)
 scale = Vector2(4, 4)
 texture = ExtResource("4_q71u5")
 script = ExtResource("4_1xib8")
+rune_name = "protection"
+
+[node name="Area2D" type="Area2D" parent="RuneProtection"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RuneProtection/Area2D"]
+shape = SubResource("CircleShape2D_f5rra")
+
+[node name="Label" type="Label" parent="RuneProtection"]
+visible = false
+offset_left = 18.0
+offset_top = -10.0
+offset_right = 227.0
+offset_bottom = 98.0
+scale = Vector2(0.25, 0.25)
+text = "25% damage
+reduction from all 
+damage"
+label_settings = SubResource("LabelSettings_8b2kk")
 
 [node name="RuneSwift" type="Sprite2D" parent="."]
-visible = false
 position = Vector2(1413, 459)
 scale = Vector2(4, 4)
 texture = ExtResource("5_mbxyk")
 script = ExtResource("4_1xib8")
+rune_name = "swift"
+
+[node name="Area2D" type="Area2D" parent="RuneSwift"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RuneSwift/Area2D"]
+shape = SubResource("CircleShape2D_f5rra")
+
+[node name="Label" type="Label" parent="RuneSwift"]
+visible = false
+offset_left = 17.5
+offset_top = -10.25
+offset_right = 283.5
+offset_bottom = 60.75
+scale = Vector2(0.25, 0.25)
+text = "one digit cut 
+from every cast 
+code"
+label_settings = SubResource("LabelSettings_8b2kk")
+
+[node name="RunePower" type="Sprite2D" parent="."]
+position = Vector2(1237, 228)
+scale = Vector2(4, 4)
+texture = ExtResource("8_tam8y")
+script = ExtResource("4_1xib8")
+rune_name = "power"
+
+[node name="Area2D" type="Area2D" parent="RunePower"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RunePower/Area2D"]
+shape = SubResource("CircleShape2D_f5rra")
+
+[node name="Label" type="Label" parent="RunePower"]
+visible = false
+offset_left = 17.5
+offset_top = -10.25
+offset_right = 283.5
+offset_bottom = 60.75
+scale = Vector2(0.25, 0.25)
+text = "25% extra damage to 
+[Ghost Dogs, Energy 
+Shot, Energy Shot Small,
+Shield, Heal]"
+label_settings = SubResource("LabelSettings_8b2kk")
+
+[node name="RuneLuck" type="Sprite2D" parent="."]
+position = Vector2(1237, 395)
+scale = Vector2(4, 4)
+texture = ExtResource("9_0nrjx")
+script = ExtResource("4_1xib8")
+rune_name = "luck"
+
+[node name="Area2D" type="Area2D" parent="RuneLuck"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RuneLuck/Area2D"]
+shape = SubResource("CircleShape2D_f5rra")
+
+[node name="Label" type="Label" parent="RuneLuck"]
+visible = false
+offset_left = 17.5
+offset_top = -10.25
+offset_right = 283.5
+offset_bottom = 60.75
+scale = Vector2(0.25, 0.25)
+text = "20% chance of 2x
+power increase per cast
+of [Energy Shot, 
+Energy Shot Small, Shield, Heal]"
+label_settings = SubResource("LabelSettings_8b2kk")
+
+[node name="RuneBloodlust" type="Sprite2D" parent="."]
+position = Vector2(1237, 586)
+scale = Vector2(4, 4)
+texture = ExtResource("10_rqsaj")
+script = ExtResource("4_1xib8")
+rune_name = "bloodlust"
+
+[node name="Area2D" type="Area2D" parent="RuneBloodlust"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RuneBloodlust/Area2D"]
+shape = SubResource("CircleShape2D_f5rra")
+
+[node name="Label" type="Label" parent="RuneBloodlust"]
+visible = false
+offset_left = 17.5
+offset_top = -10.25
+offset_right = 283.5
+offset_bottom = 60.75
+scale = Vector2(0.25, 0.25)
+text = "Applies damage 
+increase up to 2x
+as health decreases
+(on top of all other
+damage modifiers)"
+label_settings = SubResource("LabelSettings_8b2kk")

@@ -74,6 +74,10 @@ var shield_amount = 0
 
 var ui_hp_pos = Vector2(0,0) - Vector2(800,450) #windowsize / 2
 
+var runes = []
+
+var power_level = 1
+
 func stop_stutter():
 	for i in all_scenes:
 		var a = i.instantiate()
@@ -83,9 +87,12 @@ func stop_stutter():
 func _ready():
 	if Globals.p1 == null:
 		Globals.p1 = self
-		technique = Globals.technique1
+		runes = Globals.runes1
+		
 	else:
 		Globals.p2 = self
+		runes = Globals.runes2
+		
 		enemy = Globals.p1
 		
 		enemy.connect("give_energy", get_energy)
@@ -93,7 +100,6 @@ func _ready():
 		
 		Globals.p1.enemy = self
 		
-		technique = Globals.technique2
 		mov_dict = {
 			"up": "up",
 			"left": "left",
@@ -104,9 +110,23 @@ func _ready():
 		
 		ui_hp_pos = Vector2(1300,0) - Vector2(800,450) #windowsize / 2
 		
+	if "swift" in runes:
+		for key in code_to_spell.keys():
+			code_to_spell[key.left(len(key)-1)] = code_to_spell[key]
+		cast_codes = code_to_spell.keys()
+	if "power" in runes:
+		power_level = 1.25
+		
+	print(runes)
 	stop_stutter()
 		
+
 func _process(delta):
+	
+	if "bloodlust" in runes:
+		if "power" in runes:
+			power_level = 1.25
+		power_level *= 1 + (1 - hp/300.0)
 	
 	nodes_phase += delta * 5
 	manage_nodes()
@@ -160,6 +180,9 @@ func _process(delta):
 		cast_code = ""
 		clear_nodes()
 		
+		if "luck" in runes and Globals.rng.randi_range(0,4) == 0:
+			power_level *= 2
+		
 		if technique == "Black Hole":
 			dialogue("AURA")
 	
@@ -181,6 +204,7 @@ func _process(delta):
 			
 			var shot = shotscene.instantiate()
 			shot.position = position
+			shot.power_level = power_level
 			shot.set_velocity(enemy.position - position)
 			shot.exceptions.append(self)
 			get_parent().add_child(shot)
@@ -199,6 +223,7 @@ func _process(delta):
 			
 			for i in range(60):	
 				var shot = smallshotscene.instantiate()
+				shot.power_level = power_level
 				shot.position = enemy.position + Vector2(Globals.rng.randi_range(100,1000),0).rotated(Globals.rng.randi_range(0,360))
 				shot.set_velocity((enemy.position - shot.position).rotated(Globals.rng.randf_range(-.2,.2)))
 				shot.exceptions.append(self)
@@ -230,7 +255,7 @@ func _process(delta):
 				
 		if technique == "Shield":
 			dialogue("SHIELD")
-			shield_amount += 85
+			shield_amount += 85 * power_level
 			
 			if shield_amount > 170:
 				shield_amount = 170
@@ -246,9 +271,13 @@ func _process(delta):
 			dialogue("HEAL")
 			
 			var healeffect = healeffectscene.instantiate()
+			healeffect.power_level = power_level
 			add_child(healeffect)
 			
-			
+		if "luck" in runes:
+			power_level = 1
+			if "power" in runes:
+				power_level = 1.25
 			
 	if Input.is_action_just_pressed(mov_dict["up"]):
 		apply_central_force(Vector2(0,-1) * jump_force)
@@ -283,10 +312,13 @@ func dialogue(text):
 	
 func get_energy(num):
 	cursed_energy += num
+	if "heal" in runes:
+		heal(num * .25)
 	
 func spawn_dog(pos):
 	var dog = ghostdogsscene.instantiate()
 	dog.position = pos
+	dog.power_level = power_level
 	dog.target = enemy
 	get_parent().add_child(dog)
 	
@@ -295,6 +327,9 @@ func heal(amount):
 	hp = min(300, hp)
 	
 func take_dmg(dmg):
+	if "protection" in runes:
+		dmg *= .75
+		
 	if shield_amount > dmg:
 		shield_amount -= dmg
 	else:
@@ -303,7 +338,7 @@ func take_dmg(dmg):
 		hp -= dmg
 		var label = Label.new()
 		label.label_settings = label_settings
-		label.text = "-" + str(dmg)
+		label.text = "-" + str(int(dmg))
 		label.position = position + Vector2(Globals.rng.randf_range(0,64), 0).rotated(Globals.rng.randf_range(0, PI * 2))
 		get_parent().add_child(label)
 		Globals.labels.append(label)

@@ -3,14 +3,19 @@ extends Node
 var rng = RandomNumberGenerator.new()
 var p1
 var p2
-var technique1
-var technique2
 
 var labels = []
 
 var envoirment_brightness = 1
 var world_canvas
 var cam
+
+var holding = null
+
+var runes1 = []
+var runes2 = []
+var has_started = false
+
 
 func _ready():
 	pass # Replace with function body.
@@ -25,6 +30,15 @@ func _process(delta):
 		world_canvas.color = Color8(v,v,v,t)
 	
 	if Input.is_action_just_pressed("r"):
+		runes1 = []
+		runes2 = []
+	
+		var to_remove = []
+		for label in labels:
+			to_remove.append(label)
+		for label in to_remove:
+			label.queue_free()
+		labels = []
 		get_tree().change_scene_to_packed(load("res://menu.tscn"))
 	
 	var remove = []
