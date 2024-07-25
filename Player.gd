@@ -124,6 +124,7 @@ func _ready():
 func _process(delta):
 	
 	if "bloodlust" in runes:
+		power_level = 1
 		if "power" in runes:
 			power_level = 1.25
 		power_level *= 1 + (1 - hp/300.0)
@@ -208,7 +209,8 @@ func _process(delta):
 			shot.set_velocity(enemy.position - position)
 			shot.exceptions.append(self)
 			get_parent().add_child(shot)
-			
+				
+			print(power_level)
 		if technique == "Hollow Purple":
 			emit_signal("blackhole_cast", self)
 			dialogue("HOLLOW PURPLE")
@@ -300,6 +302,8 @@ func _process(delta):
 	
 	if hp < 0:
 		hp = -9999
+		if enemy.hp > 0:
+			$UI/HP.rotation = 90
 
 
 func dialogue(text):
@@ -327,6 +331,13 @@ func heal(amount):
 	hp = min(300, hp)
 	
 func take_dmg(dmg):
+	
+	if "thorns" in runes:
+		enemy.take_dmg(dmg * 0.12)
+		
+	if "invincibility" in runes and Globals.rng.randi_range(0,99) < 15:
+		dmg *= 0
+		
 	if "protection" in runes:
 		dmg *= .75
 		
