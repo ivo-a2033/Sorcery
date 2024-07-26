@@ -31,7 +31,7 @@ func hit_hp(body):
 	if body.get("hp") != null and not(body in exceptions):
 		body.take_dmg(damage * power_level)
 		if bouncy:
-			body.recoil(position)
+			body.big_recoil(position)
 		emit_signal("give_energy", damage)
 		queue_free()
 		

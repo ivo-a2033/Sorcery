@@ -29,7 +29,9 @@ var handscene = load("res://hand.tscn")
 var dragonshotscene = load("res://dragon_shot.tscn")
 var rockscene = load("res://rock_wall.tscn")
 var healeffectscene = load("res://heal_effect.tscn")
-
+var buffeffectscene = load("res://buff_effect.tscn")
+var laser = load("res://laser.tscn")
+var eggscene = load("res://egg.tscn")
 
 var enemy 
 signal give_energy
@@ -44,7 +46,7 @@ var damage_time = 0
 signal blackhole_cast
 
 var all_scenes = [blackhole, ghostdogsscene, ghostdogsscenespawner, shotscene, hollowpurple,
-					smallshotscene, handscene, dragonshotscene, rockscene, healeffectscene]
+					smallshotscene, handscene, dragonshotscene, rockscene, healeffectscene, buffeffectscene]
 
 var cast_code = ""
 var code_to_spell = {
@@ -58,6 +60,9 @@ var code_to_spell = {
 	("1010 0111").replace(" ", ""): "Shield",
 	("1111 0011 1101").replace(" ", ""): "Rock",
 	("1010 0000 0101").replace(" ", ""): "Heal",
+	("0101 1101").replace(" ", ""): "Buff",
+	("1010 1001 1011").replace(" ", ""): "Laser",
+	("1001 0111 1011 1001").replace(" ", ""): "Birb",
 }
 var cast_codes = code_to_spell.keys()
 
@@ -77,6 +82,9 @@ var ui_hp_pos = Vector2(0,0) - Vector2(800,450) #windowsize / 2
 var runes = []
 
 var power_level = 1
+
+var regular_buff = 0 
+var regular_power = 1
 
 func stop_stutter():
 	for i in all_scenes:
@@ -210,7 +218,7 @@ func _process(delta):
 			shot.exceptions.append(self)
 			get_parent().add_child(shot)
 				
-			print(power_level)
+		
 		if technique == "Hollow Purple":
 			emit_signal("blackhole_cast", self)
 			dialogue("HOLLOW PURPLE")
@@ -226,7 +234,9 @@ func _process(delta):
 			for i in range(60):	
 				var shot = smallshotscene.instantiate()
 				shot.power_level = power_level
-				shot.position = enemy.position + Vector2(Globals.rng.randi_range(100,1000),0).rotated(Globals.rng.randi_range(0,360))
+				shot.position = enemy.position + Vector2(
+					Globals.rng.randi_range(100,1000),0).rotated(Globals.rng.randi_range(0,360)
+					)
 				shot.set_velocity((enemy.position - shot.position).rotated(Globals.rng.randf_range(-.2,.2)))
 				shot.exceptions.append(self)
 				get_parent().add_child(shot)
@@ -275,7 +285,33 @@ func _process(delta):
 			var healeffect = healeffectscene.instantiate()
 			healeffect.power_level = power_level
 			add_child(healeffect)
+		
+		if technique == "Buff":
+			dialogue("BUFF")
 			
+			var buffeffect = buffeffectscene.instantiate()
+			add_child(buffeffect)
+			
+			regular_buff = 8
+			
+		if technique == "Laser":
+			dialogue("LASER")
+	
+			var lasernew = laser.instantiate()
+			lasernew.position = position
+			lasernew.caster = self
+			get_parent().add_child(lasernew)	
+		
+		if technique == "Birb":
+			dialogue("BIRB")
+			
+			var egg = eggscene.instantiate()
+			egg.global_position = global_position
+			egg.enemy = enemy
+			egg.caster = self
+			get_parent().add_child(egg)
+			
+
 		if "luck" in runes:
 			power_level = 1
 			if "power" in runes:
@@ -283,8 +319,6 @@ func _process(delta):
 			
 	if Input.is_action_just_pressed(mov_dict["up"]):
 		apply_central_force(Vector2(0,-1) * jump_force)
-	
-	
 	
 		
 	flip_x = sign(enemy.position.x - position.x)
@@ -297,9 +331,15 @@ func _process(delta):
 		slash.flip_x = flip_x
 		slash.set_velocity()
 		slash.exceptions.append(self)
+		slash.damage = slash.damage * regular_power
 		get_parent().add_child(slash)
 	
-	
+	if regular_buff > 0:
+		regular_buff -= delta
+		regular_power = 2
+		if not (regular_buff > 0):
+			regular_power = 1
+		
 	if hp < 0:
 		hp = -9999
 		if enemy.hp > 0:
@@ -350,7 +390,9 @@ func take_dmg(dmg):
 		var label = Label.new()
 		label.label_settings = label_settings
 		label.text = "-" + str(int(dmg))
-		label.position = position + Vector2(Globals.rng.randf_range(0,64), 0).rotated(Globals.rng.randf_range(0, PI * 2))
+		label.position = position + Vector2(
+			Globals.rng.randf_range(0,64), 0).rotated(Globals.rng.randf_range(0, PI * 2)
+			)
 		get_parent().add_child(label)
 		Globals.labels.append(label)
 		emit_signal("give_energy", dmg)
@@ -360,7 +402,11 @@ func take_dmg(dmg):
 
 func recoil(pos):
 	var vec = (position - pos)
-	apply_central_force(vec.normalized() * 100000)
+	apply_central_force(vec.normalized() * 20000)
+
+func big_recoil(pos):
+	var vec = (position - pos)
+	apply_central_force(vec.normalized() * 80000)
 	
 func go(pos, duration):
 	var vec = -(position - pos)

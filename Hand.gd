@@ -1,11 +1,13 @@
 extends Area2D
 
 
-var velocity = Vector2(0,-256)
+var velocity = Vector2(0,-512)
 var pulling = null
 var hand_closed = load("res://hand_closed.png")
-var time = 20
+var time = 10
 var decay = 1
+
+var has_grabbed = false
 
 func _ready():
 	connect("body_entered", grab)
@@ -23,10 +25,11 @@ func _process(delta):
 		queue_free()
 	
 func grab(body):
-	if body.get("hp") != null:
+	if body.get("hp") != null and not has_grabbed:
 		pulling = body
-		velocity.y = 256
-		
+		velocity.y = 32
 		$Sprite2D.texture = hand_closed
-	else:
-		decay *= 15
+		global_position = body.global_position
+		
+		has_grabbed = true
+

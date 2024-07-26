@@ -129,7 +129,6 @@ offset_top = 892.0
 offset_right = 1600.0
 offset_bottom = 2052.0
 texture = ExtResource("2_hnyhf")
-stretch_mode = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 position = Vector2(800, 1112)
@@ -143,7 +142,7 @@ offset_left = -249.0
 offset_top = -226.0
 offset_right = 318.0
 offset_bottom = 178.0
-text = "0011 0101 1011: Black Hole
+text = "0011 0101: Black Hole
 1101 0101 10: Ghost Dogs
 1011 10: Energy Shot
 0101 1010 1111 0011: Hollow Purple
@@ -152,7 +151,9 @@ text = "0011 0101 1011: Black Hole
 1110 1101 1011: Dragon Shot
 1010 0111: Shield
 1111 0011 1101: Rock
-1010 0000 0101: Heal"
+1010 0000 0101: Heal
+0101 1101: Buff
+1010 1001 1011: Laser"
 label_settings = SubResource("LabelSettings_djocd")
 
 [node name="GameEnd" type="Label" parent="Camera2D"]
